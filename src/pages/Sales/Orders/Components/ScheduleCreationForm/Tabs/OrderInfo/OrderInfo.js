@@ -75,37 +75,47 @@ export default function OrderInfo(props) {
 	// 	setSelectedEngineer(event.target.value);
 	// };
 
-	console.log("props.OrderData", props.OrderData.Order_No);
-	const handleChange = async (event) => {
+	console.log("props.OrderData", props?.OrderData?.Order_No);
+
+	const handleChange = (event) => {
 		const { id, value } = event.target;
+		// let updatedEngineer = selectedEngineer;
 
 		if (id === "formDealingEngineer") {
-			console.log("Selected Name id", value);
 			const [selectedId, selectedName] = value.split(":");
-			console.log("Selected ID:", selectedId);
-			console.log("Selected Name:", selectedName);
-			// setSelectedEngineer(selectedId); // Sets only ID if needed in state
-			// setSelectedEngineer(value);
+			// console.log("Selected ID:", selectedId);
+			// console.log("Selected Name 1:", selectedName);
+
 			setSelectedEngineer(selectedName);
+			var updatedEngineer = selectedName;
 		} else if (id === "deliveryDate") {
 			console.log("value", value);
 
 			setDeliveryDate(value);
+			var updatedDeliveryDate = value;
 		} else if (id === "OrderValue") {
 			console.log("value", value);
 
 			setOrderValue(value);
 		}
-
+		// console.log("Selected Name 2", selectedEngineer);
+		console.log("updatedEngineer", updatedEngineer);
+		console.log("updatedDeliveryDate", updatedDeliveryDate);
 		// Prepare the data for the second update (updateOrderDetails)
 		const updateOrderDetailsData = {
 			orderNo: props.OrderData.Order_No,
-			deliveryDate: deliveryDate,
-			delEngr: selectedEngineer,
+			// deliveryDate: deliveryDate,
+			// delEngr: selectedEngineer,
+
+			// deliveryDate: updatedDeliveryDate,
+			// delEngr: updatedEngineer,
+
+			deliveryDate: updatedDeliveryDate ? updatedDeliveryDate : deliveryDate, // Ternary operator for deliveryDate
+			delEngr: updatedEngineer ? updatedEngineer : selectedEngineer,
 		};
 
 		// Call the updateOrderDetails API
-		const orderDetailsResponse = await postRequest(
+		const orderDetailsResponse = postRequest(
 			endpoints.updateOrderTblDetails,
 			updateOrderDetailsData
 		);
@@ -209,7 +219,7 @@ export default function OrderInfo(props) {
 							className="in-field"
 							type="text"
 							value={props.OrderData?.OrderValue}
-							onChange={handleChange}
+							onChange={props.handleChangeOrderInfo}
 						/>
 					</div>
 					{/* <div

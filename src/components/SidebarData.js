@@ -28,12 +28,12 @@ import { AiOutlineSchedule } from "react-icons/ai";
 import { GiLaserPrecision } from "react-icons/gi";
 import { HiCubeTransparent } from "react-icons/hi";
 import { AiFillSchedule } from "react-icons/ai";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://172.16.20.61:3000";
+const previousMenuUrl = process.env.REACT_APP_PREVIOUS_MENU_URL;
 
-console.log("123", BASE_URL);
-
-export const ordersSidebar = [
+export const customerSidebar = [
 	{
 		title: "Profile",
 		icon: <FiCpu />,
@@ -171,85 +171,6 @@ export const ordersSidebar = [
 			// },
 		],
 	},
-
-	// {
-	// 	title: "Combined Schedules",
-	// 	icon: <AiFillCreditCard />,
-	// 	iconClosed: <RiIcons.RiArrowDownSFill />,
-	// 	iconOpened: <RiIcons.RiArrowUpSFill />,
-
-	// 	subNav: [
-	// 		{
-	// 			title: "Job Work",
-	// 			icon: <VscTypeHierarchySub />,
-	// 			subNav: [
-	// 				{
-	// 					title: "Create",
-	// 					path: "/Orders/CombinedSchedules/JobWork/Create",
-	// 					icon: <AiIcons.AiOutlineArrowRight />,
-	// 				},
-
-	// 				{
-	// 					title: "Open",
-	// 					path: "/Orders/CombinedSchedules/JobWork/Open",
-	// 					icon: <AiIcons.AiOutlineArrowRight />,
-	// 				},
-
-	// 				{
-	// 					title: "SheduleList",
-	// 					icon: <AiIcons.AiOutlineArrowRight />,
-	// 					subNav: [
-	// 						{
-	// 							title: "Order",
-	// 							path: "/Orders/CombinedSchedules/JobWork/ScheduleList/Order",
-	// 							icon: <AiIcons.AiOutlineArrowRight />,
-	// 						},
-
-	// 						{
-	// 							title: "Closed",
-	// 							path: "/Orders/CombinedSchedules/JobWork/ScheduleList/Closed",
-	// 							icon: <AiIcons.AiOutlineArrowRight />,
-	// 						},
-	// 					],
-	// 				},
-	// 			],
-	// 		},
-
-	// 		{
-	// 			title: "Sales",
-	// 			icon: <VscTypeHierarchySub />,
-	// 			subNav: [
-	// 				{
-	// 					title: "Create",
-	// 					path: "/Orders/CombinedSchedules/Sales/Create",
-	// 					icon: <AiIcons.AiOutlineArrowRight />,
-	// 				},
-
-	// 				{
-	// 					title: "Open",
-	// 					path: "/Orders/CombinedSchedules/Sales/Open",
-	// 					icon: <AiIcons.AiOutlineArrowRight />,
-	// 				},
-	// 				{
-	// 					title: "SheduleList",
-	// 					icon: <AiIcons.AiOutlineArrowRight />,
-	// 					subNav: [
-	// 						{
-	// 							title: "Order",
-	// 							path: "/Orders/CombinedSchedules/Sales/ScheduleList/Order",
-	// 							icon: <AiIcons.AiOutlineArrowRight />,
-	// 						},
-	// 						{
-	// 							title: "Closed",
-	// 							path: "/Orders/CombinedSchedules/Sales/ScheduleList/Closed",
-	// 							icon: <AiIcons.AiOutlineArrowRight />,
-	// 						},
-	// 					],
-	// 				},
-	// 			],
-	// 		},
-	// 	],
-	// },
 	{
 		title: "Combined Schedule",
 		icon: <SiRedhatopenshift />,
@@ -258,7 +179,6 @@ export const ordersSidebar = [
 		subNav: [
 			{
 				title: "Job Work",
-				path: "/Orders/JobWork",
 				icon: <BsServer />,
 				subNav: [
 					{
@@ -273,7 +193,6 @@ export const ordersSidebar = [
 					// },
 					{
 						title: "ScheduleList",
-						// path: "/Orders/JobWork/ScheduleList",
 						icon: <AiIcons.AiOutlineArrowRight />,
 						subNav: [
 							{
@@ -326,7 +245,6 @@ export const ordersSidebar = [
 			},
 		],
 	},
-
 	{
 		title: "Fabrication",
 		icon: <FaDropbox />,
@@ -467,27 +385,14 @@ export const ordersSidebar = [
 			},
 		],
 	},
-
-	// {
-	// 	title: "Previous Menu 123",
-	// 	path: "#", // Dummy value as we'll handle navigation manually
-	// 	icon: <MdIcon.MdPreview />,
-	// 	iconClosed: <RiIcons.RiArrowDownSFill />,
-	// 	iconOpened: <RiIcons.RiArrowUpSFill />,
-	// 	onClick: () => {
-	// 		console.log("Navigating to Sales Home");
-	// 		window.location.href = "http://172.16.20.61:3000/salesHome";
-	// 	},
-	// },
-
 	{
 		title: "Previous Menu",
-		path: "/",
 		// path: "http://172.16.20.61:3000/home",
-		path: "http://192.168.1.25:9000/home",
+		path: previousMenuUrl,
 		icon: <MdIcon.MdPreview />,
 		iconClosed: <RiIcons.RiArrowDownSFill />,
 		iconOpened: <RiIcons.RiArrowUpSFill />,
+		external: true,
 	},
 ];
 

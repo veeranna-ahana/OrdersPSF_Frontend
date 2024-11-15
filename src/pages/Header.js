@@ -45,7 +45,7 @@
 //         >
 //           {getUser() !== undefined ? (
 //             <>
-//               {/* <>{console.log(getUser())}</> */}
+//               {/* <>{////console.log(getUser())}</> */}
 //               <>
 //                 {getUser()[0]["Name"]} - {getUser()[0]["UnitName"]} |{" "}
 //               </>
@@ -89,21 +89,24 @@ function Header() {
 	const getUser = () => {
 		// const cookieData = Cookies.get("LazerUser");
 		const cookieData = JSON.parse(Cookies.get("userData"));
-		console.log("cookieData:", cookieData.Name);
+		////console.log("cookieData:", cookieData.Name);
 		if (cookieData) {
 			const data = cookieData;
-			console.log("data", data);
+			////console.log("data", data);
 			return data.data;
 		}
 		return null;
 	};
 	const userData = JSON.parse(Cookies.get("userData"));
-	console.log("User Data:", userData.Name);
+	////console.log("User Data:", userData.Name);
 	// Function to handle logout
+	const logoutUrl = process.env.REACT_APP_LOGOUT_URL;
+
 	const logout = () => {
 		Cookies.remove("userData");
 		// window.location.replace("http://172.16.20.61:3000/");
-		window.location.replace("http://192.168.1.25:9000/");
+		window.location.replace(logoutUrl);
+		// window.location.replace("http://192.168.1.25:9000/");
 	};
 
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -116,7 +119,7 @@ function Header() {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-	console.log("userData?.Name", userData?.Name);
+	////console.log("userData?.Name", userData?.Name);
 	return (
 		<>
 			<nav className="header">
