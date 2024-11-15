@@ -746,6 +746,71 @@ export default function ScheduleCreationForm(props) {
 	// 		}
 	// 	}
 	// };
+	// const formatDate = (dateString) => {
+	// 	const date = new Date(dateString);
+	// 	const year = date.getFullYear();
+	// 	const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Month is zero-based
+	// 	const day = date.getDate().toString().padStart(2, "0");
+	// 	// Use template literals to format the date
+	// 	return `${year}-${month}-${day}`;
+	// };
+	// const [selectedEngineer, setSelectedEngineer] = useState(
+	// 	props.OrderData?.Dealing_Engineer || ""
+	// );
+	// const [deliveryDate, setDeliveryDate] = useState(formatDate(""));
+	// const [orderValue, setOrderValue] = useState(formatDate(""));
+	// useEffect(() => {
+	// 	if (props.OrderData?.Delivery_Date) {
+	// 		setDeliveryDate(formatDate(OrderData?.Delivery_Date));
+	// 	}
+	// }, [props.OrderData?.Delivery_Date]);
+	// useEffect(() => {
+	// 	setSelectedEngineer(props.OrderData?.Dealing_Engineer);
+	// }, [props.OrderData]);
+	// console.log("selectedEngineer", selectedEngineer);
+
+	// const handleChangeOrderInfo = (event) => {
+	// 	const { id, value } = event.target;
+
+	// 	if (id === "formDealingEngineer") {
+	// 		const [selectedId, selectedName] = value.split(":");
+	// 		console.log("Selected ID:", selectedId);
+	// 		console.log("Selected Name 1:", selectedName);
+
+	// 		setSelectedEngineer(selectedName);
+	// 	} else if (id === "deliveryDate") {
+	// 		console.log("value", value);
+
+	// 		setDeliveryDate(value);
+	// 	} else if (id === "OrderValue") {
+	// 		console.log("value", value);
+
+	// 		setOrderValue(value);
+	// 	}
+	// 	console.log("Selected Name 2", selectedEngineer);
+	// 	// Prepare the data for the second update (updateOrderDetails)
+	// 	const updateOrderDetailsData = {
+	// 		orderNo: props?.OrderData?.Order_No,
+	// 		deliveryDate: deliveryDate,
+	// 		delEngr: selectedEngineer,
+	// 		// delEngr: selectedName,
+	// 	};
+
+	// 	// Call the updateOrderDetails API
+	// 	const orderDetailsResponse = postRequest(
+	// 		endpoints.updateOrderTblDetails,
+	// 		updateOrderDetailsData
+	// 	);
+
+	// 	if (orderDetailsResponse.success) {
+	// 		// toast.success("Order details updated successfully");
+	// 		// fetchData(); // Fetch updated data after both updates
+	// 	} else {
+	// 		// toast.warning("Order details update failed, check once");
+	// 	}
+	// };
+	// console.log("Selected Name 3", selectedEngineer);
+	// console.log("delivery date 1", deliveryDate);
 	const handleJWMR = async (index, field, value) => {
 		console.log("value is", value);
 		if (value < 0) {
@@ -1431,6 +1496,8 @@ export default function ScheduleCreationForm(props) {
 						<OrderInfo
 							OrderData={OrderData}
 							salesExecdata={salesExecdata}
+							// handleChangeOrderInfo={handleChangeOrderInfo}
+							// deliveryDate={deliveryDate}
 						/>
 					</Tab>
 					<Tab
