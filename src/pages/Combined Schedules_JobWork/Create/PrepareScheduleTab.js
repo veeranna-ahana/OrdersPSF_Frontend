@@ -28,16 +28,24 @@ export default function PrepareScheduleTab({
   setSelectedRowIndex,
   selectedRowIndex,
   setRowSelectEnable,
-  rowSelectEnable,disablebutton, setDisableButton
+  rowSelectEnable,
+  disablebutton,
+  setDisableButton,
 }) {
   const [openCombinedSchedule, setOpenCombinedSchedule] = useState(false);
   const [openTasked, setOpenTasked] = useState(false);
   const [validationpopup, setValidationPopup] = useState();
   const [rowselectleftSales, setRowSelectLeftSales] = useState([]);
+  const [openSchedule, setOpenSchedule] = useState(false);
 
   //open CombineSchedule Modal
   const openCombineScheduleModal = () => {
     setOpenCombinedSchedule(true);
+  };
+
+  //open Schedulle Modal
+  const openSchedulModal = () => {
+    setOpenSchedule(true);
   };
 
   //open Tasked Modal
@@ -48,6 +56,12 @@ export default function PrepareScheduleTab({
   //close CombineSchedule Modal
   const closeCombineScheduleModal = () => {
     setOpenCombinedSchedule(false);
+    openSchedulModal();
+  };
+
+  //close Schedule Modal
+  const closeScheduleModal = () => {
+    setOpenSchedule(false);
     openTaskedModal();
   };
 
@@ -87,9 +101,29 @@ export default function PrepareScheduleTab({
     setSelectedRows(updatedSelectedRows);
   };
 
+  // const onClickSelectAllRightSales = () => {
+  //   const updatedSelectedRows =
+  //     selectedRowsSales.length === 0 ? [...oderSchedule] : [...oderSchedule];
+  //   setSelectedRowsSales(updatedSelectedRows);
+  // };
+
   const onClickSelectAllRightSales = () => {
-    const updatedSelectedRows =
-      selectedRowsSales.length === 0 ? [...oderSchedule] : [...oderSchedule];
+    const updatedSelectedRows = [...selectedRowsSales];
+
+    oderSchedule.forEach((item) => {
+      const selectedItemIndex = updatedSelectedRows.findIndex(
+        (selectedItem) => selectedItem.TaskNo === item.TaskNo
+      );
+
+      if (selectedItemIndex !== -1) {
+        // If the item is already selected, remove it
+        updatedSelectedRows.splice(selectedItemIndex, 1);
+      } else {
+        // If the item is not selected, add it
+        updatedSelectedRows.push(item);
+      }
+    });
+
     setSelectedRowsSales(updatedSelectedRows);
   };
 
@@ -282,9 +316,6 @@ export default function PrepareScheduleTab({
     );
   };
 
-
-
-
   useEffect(() => {
     getAlldataAfterCombineSchedule();
   }, [combinedScheduleNo]);
@@ -358,7 +389,6 @@ export default function PrepareScheduleTab({
     setPrepareScheduleData([]);
   };
 
-
   //JobWork Row select
   const handleRowClick = (item, index) => {
     let list = { ...item, index: index };
@@ -415,12 +445,10 @@ export default function PrepareScheduleTab({
     }
   }, [beforecombineSales, handleRowClickSales]);
 
-
-  
-  useEffect(()=>{
+  useEffect(() => {
     // setBeforeCombineSales([]);
     setPrepareScheduleData([]);
-  },[selectedCustomerSales])
+  }, [selectedCustomerSales]);
 
   return (
     <>
@@ -739,6 +767,21 @@ export default function PrepareScheduleTab({
           />
 
           <Popup
+            show={openSchedule}
+            onHide={(e) => setOpenSchedule(e)}
+            firstbutton={closeScheduleModal}
+            title="Magod Order"
+            message={
+              <>
+                Combined Schedule{" "}
+                <span style={{ fontWeight: "bold" }}>{combinedScheduleNo}</span>{" "}
+                Created
+              </>
+            }
+            firstbuttontext="OK"
+          />
+
+          <Popup
             show={openTasked}
             onHide={(e) => setOpenTasked(e)}
             firstbutton={closeTaskModal}
@@ -962,6 +1005,23 @@ export default function PrepareScheduleTab({
                       {combinedScheduleNo}
                     </span>{" "}
                     created
+                  </>
+                }
+                firstbuttontext="OK"
+              />
+
+              <Popup
+                show={openSchedule}
+                onHide={(e) => setOpenSchedule(e)}
+                firstbutton={closeScheduleModal}
+                title="Magod Order"
+                message={
+                  <>
+                    Combined Schedule{" "}
+                    <span style={{ fontWeight: "bold" }}>
+                      {combinedScheduleNo}
+                    </span>{" "}
+                    Created
                   </>
                 }
                 firstbuttontext="OK"
