@@ -171,7 +171,7 @@ export default function Create({ type }) {
   useEffect(() => {
     // Set default value when component mounts
     if (oderSchedule.length > 0) {
-      setSelectedSalesContact(oderSchedule[0]?.SalesContact || "");
+      setSelectedSalesContact(oderSchedule[0]?.SalesContact);
     }
   }, [oderSchedule]);
 
