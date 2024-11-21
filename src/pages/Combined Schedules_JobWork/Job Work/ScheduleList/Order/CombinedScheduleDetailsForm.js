@@ -109,7 +109,8 @@ function CombinedScheduleDetailsForm() {
     postRequest(
       endpoints.CombinedTasksTaskTable,
       {
-        ScheduleId: selectedRow?.ScheduleId,
+        ScheduleId: selectedRow?.ScheduleId
+        ,
       },
       (response) => {
         setTaskNoTableData(response);
@@ -120,7 +121,6 @@ function CombinedScheduleDetailsForm() {
   //const row select TaskNo Table
   const [selectedTaskNo, setSelectedTaskNo] = useState({});
   const [DwgNameTableData, setDwgNameTableData] = useState([]);
-
   const rowSelectFuncTaskNo = (item, index) => {
     let list = { ...item, index: index };
     setSelectedTaskNo(list);
@@ -135,13 +135,6 @@ function CombinedScheduleDetailsForm() {
       }
     );
   };
-
-  useEffect(() => {
-    // Automatically select the first row if data is available
-    if (TaskNoTableData && TaskNoTableData.length > 0) {
-      rowSelectFuncTaskNo(TaskNoTableData[0], 0);
-    }
-  }, [TaskNoTableData]);
 
   ///Original Schedules Table 1
   const [orinalScheudledata, setOrinalScheduledata] = useState([]);
@@ -161,7 +154,6 @@ function CombinedScheduleDetailsForm() {
   //table row select
   const [selectedOrignalSchedule, setSelectedOrignalSchedule] = useState({});
   const [orinalScheudleTable2, setOrinalScheduleTable2] = useState([]);
-
   const rowSelectFuncOriginalSchedule = (item, index) => {
     let list = { ...item, index: index };
     // console.log(list);
@@ -177,14 +169,6 @@ function CombinedScheduleDetailsForm() {
       }
     );
   };
-
-  useEffect(() => {
-    // Automatically select the first row if data is available
-    if (orinalScheudledata && orinalScheudledata.length > 0) {
-      rowSelectFuncOriginalSchedule(orinalScheudledata[0], 0);
-    }
-  }, [orinalScheudledata]);
-
 
   useEffect(() => {
     getSalesContactList();
@@ -307,7 +291,8 @@ function CombinedScheduleDetailsForm() {
       selectedRow,
       orinalScheudledata,
     };
-    postRequest(endpoints.CopyDwg, { requestData }, (response) => {});
+    postRequest(endpoints.CopyDwg, { requestData }, (response) => {
+    });
   };
 
   //
