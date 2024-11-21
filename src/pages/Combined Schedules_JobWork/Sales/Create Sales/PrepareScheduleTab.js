@@ -25,12 +25,18 @@ export default function PrepareScheduleTab({
   storedDate,
 }) {
   const [openCombinedSchedule, setOpenCombinedSchedule] = useState(false);
+  const [openSchedule, setOpenSchedule] = useState(false);
   const [openTasked, setOpenTasked] = useState(false);
   const [validationpopup, setValidationPopup] = useState();
 
   //open CombineSchedule Modal
   const openCombineScheduleModal = () => {
     setOpenCombinedSchedule(true);
+  };
+
+  //open Schedulle Modal
+  const openSchedulModal = () => {
+    setOpenSchedule(true);
   };
 
   //open Tasked Modal
@@ -41,6 +47,12 @@ export default function PrepareScheduleTab({
   //close CombineSchedule Modal
   const closeCombineScheduleModal = () => {
     setOpenCombinedSchedule(false);
+    openSchedulModal();
+  };
+
+  //close Schedule Modal
+  const closeScheduleModal = () => {
+    setOpenSchedule(false);
     openTaskedModal();
   };
 
@@ -144,26 +156,34 @@ export default function PrepareScheduleTab({
     if (rowselectleft.length <= 1) {
       validationModal();
     } else {
-      postRequest(endpoints.CreateSchedule, {
-        rowselectleft,
-        custCode: custCode,
-        selectedSalesContact: selectedSalesContact,
-        Date: storedDate,
-        ScheduleDate: ScheduleDate,
-      },(response) => {
-        setDisableButton(true);
-        setCombinedScheduleNo(response.combinedScheduleNos[0]);
-        openCombineScheduleModal();
-      });
+      postRequest(
+        endpoints.CreateSchedule,
+        {
+          rowselectleft,
+          custCode: custCode,
+          selectedSalesContact: selectedSalesContact,
+          Date: storedDate,
+          ScheduleDate: ScheduleDate,
+        },
+        (response) => {
+          setDisableButton(true);
+          setCombinedScheduleNo(response.combinedScheduleNos[0]);
+          openCombineScheduleModal();
+        }
+      );
     }
   };
 
   const getAlldataAfterCombineSchedule = () => {
-    postRequest(endpoints.afterCombinedSchedule, {
-      combinedScheduleNo,
-    },(response) => {
-      setBeforeCombine(response);
-    });
+    postRequest(
+      endpoints.afterCombinedSchedule,
+      {
+        combinedScheduleNo,
+      },
+      (response) => {
+        setBeforeCombine(response);
+      }
+    );
   };
 
   useEffect(() => {
@@ -392,6 +412,21 @@ export default function PrepareScheduleTab({
                 Combined order{" "}
                 <span style={{ fontWeight: "bold" }}>{combinedScheduleNo}</span>{" "}
                 created
+              </>
+            }
+            firstbuttontext="OK"
+          />
+
+          <Popup
+            show={openSchedule}
+            onHide={(e) => setOpenSchedule(e)}
+            firstbutton={closeScheduleModal}
+            title="Magod Order"
+            message={
+              <>
+                Combined Schedule{" "}
+                <span style={{ fontWeight: "bold" }}>{combinedScheduleNo}</span>{" "}
+                Created
               </>
             }
             firstbuttontext="OK"

@@ -7,12 +7,11 @@ import { getRequest, postRequest } from "../../api/apiinstance";
 import { endpoints } from "../../api/constants";
 
 export default function Create({ type }) {
-
   //disable button
 
   const [disablebutton, setDisableButton] = useState(true);
 
-  console.log("disablebutton is",disablebutton);
+  console.log("disablebutton is", disablebutton);
 
   //get sales contact list
   const [salesContactList, setSalesContactList] = useState([]);
@@ -29,7 +28,6 @@ export default function Create({ type }) {
   //Completion DATE
   const [displayDate, setDisplayDate] = useState(getTodayDateString());
   const [storedDate, setStoredDate] = useState(getTodayDateTimeString());
-
 
   function getTodayDateString() {
     const today = new Date();
@@ -63,12 +61,12 @@ export default function Create({ type }) {
     setDisplayDate(e.target.value);
   };
 
-    //set data for first table
-    const [beforecombine, setBeforeCombine] = useState([]);
-    const onclickofLeftShiftButton = () => {
-      setBeforeCombine(selectedRows);
-      setRowSelectLeft(selectedRows);
-    };
+  //set data for first table
+  const [beforecombine, setBeforeCombine] = useState([]);
+  const onclickofLeftShiftButton = () => {
+    setBeforeCombine(selectedRows);
+    setRowSelectLeft(selectedRows);
+  };
 
   //set Customer
   const [custdata, setCustdata] = useState([]);
@@ -85,38 +83,40 @@ export default function Create({ type }) {
 
   const [oderSchedule, setOrderSchedule] = useState([]);
   const [custCode, setCustCode] = useState(""); // Use state hook to manage custCode
-  const[custName,setCustName]=useState("");
+  const [custName, setCustName] = useState("");
   const selectCust = async (event) => {
     // Update custCode using the setCustCode function from useState
     setCustCode(event[0]?.Cust_Code);
     setCustName(event[0]?.Cust_name);
-    postRequest(endpoints.rightTabledata, {
-      custCode: event[0]?.Cust_Code},(response) => {
-      for (let i = 0; i < response.length; i++) {
-        let datesplit = response[i].schTgtDate.split(" ");
-        let ScheduleDate = datesplit[0].split("-");
-        let finalDay =
-          ScheduleDate[2] + "/" + ScheduleDate[1] + "/" + ScheduleDate[0];
+    postRequest(
+      endpoints.rightTabledata,
+      {
+        custCode: event[0]?.Cust_Code,
+      },
+      (response) => {
+        for (let i = 0; i < response.length; i++) {
+          let datesplit = response[i].schTgtDate.split(" ");
+          let ScheduleDate = datesplit[0].split("-");
+          let finalDay =
+            ScheduleDate[2] + "/" + ScheduleDate[1] + "/" + ScheduleDate[0];
           response[i].schTgtDate = finalDay;
-      }
-      for (let i = 0; i < response.length; i++) {
-        let datesplit1 = response[i].Delivery_Date.split(" ");
-        let Delivery_Date = datesplit1[0].split("-");
-        let finalDay1 =
-          Delivery_Date[2] + "/" + Delivery_Date[1] + "/" + Delivery_Date[0];
+        }
+        for (let i = 0; i < response.length; i++) {
+          let datesplit1 = response[i].Delivery_Date.split(" ");
+          let Delivery_Date = datesplit1[0].split("-");
+          let finalDay1 =
+            Delivery_Date[2] + "/" + Delivery_Date[1] + "/" + Delivery_Date[0];
           response[i].Delivery_Date = finalDay1;
+        }
+        setOrderSchedule(response);
+        setPrepareScheduleData([]);
+        setBeforeCombine([]);
+        setSelectedRows([]);
       }
-      setOrderSchedule(response);
-      setPrepareScheduleData([]);
-      setBeforeCombine([]);
-      setSelectedRows([]);
-    });
+    );
   };
 
-  useEffect(() => {}, [custCode]); 
-
-
-
+  useEffect(() => {}, [custCode]);
 
   //row Select for right table
   const [selectedRows, setSelectedRows] = useState([]);
@@ -134,7 +134,6 @@ export default function Create({ type }) {
     }
     setSelectedRows(updatedSelection);
   };
-
 
   //rowselect left table
   const [rowselectleft, setRowSelectLeft] = useState([]);
@@ -159,19 +158,23 @@ export default function Create({ type }) {
   const [preapreScheduleData, setPrepareScheduleData] = useState([]);
   const onclickpreapreScheduleButton = () => {
     setRowSelectEnable(true);
-    postRequest(endpoints.prepareSchedule, {
-      ScheduleId: selectedRowIndex?.ScheduleId,
-    },(response) => {
-      setPrepareScheduleData(response);
-      setDisableButton(false);
-    });
+    postRequest(
+      endpoints.prepareSchedule,
+      {
+        ScheduleId: selectedRowIndex?.ScheduleId,
+      },
+      (response) => {
+        setPrepareScheduleData(response);
+        setDisableButton(false);
+      }
+    );
   };
 
   const [selectedSalesContact, setSelectedSalesContact] = useState("");
   useEffect(() => {
     // Set default value when component mounts
     if (oderSchedule.length > 0) {
-      setSelectedSalesContact(oderSchedule[0]?.SalesContact || "");
+      setSelectedSalesContact(oderSchedule[0]?.SalesContact);
     }
   }, [oderSchedule]);
 
@@ -184,38 +187,34 @@ export default function Create({ type }) {
 
       <div className="row">
         <div className="col-md-4">
-          {type === 'JobWork' ?
-           <div className="d-flex field-gap">
-           <label className="form-label label-space">
-             Customer Name{" "}
-             <span
-               style={{
-                 color: "#f20707",
-                 fontWeight: "bold",
-               }}
-             >
-               *
-             </span>
-           </label>
+          {type === "JobWork" ? (
+            <div className="d-flex field-gap">
+              <label className="form-label label-space">
+                Customer Name{" "}
+                <span
+                  style={{
+                    color: "#f20707",
+                    fontWeight: "bold",
+                  }}
+                >
+                  *
+                </span>
+              </label>
 
-           {1 > 0 ? (
-             <Typeahead
-               className="ip-select mt-1"
-               id="basic-example"
-               options={custdata}
-               placeholder="Select Customer"
-               onChange={(label, event) => selectCust(label)}
-             />
-           ) : (
-             ""
-           )}
-         </div>
-         :
-          null
-        }
-          <label className="form-label">
-            Selected Schedules{" "}
-          </label>
+              {1 > 0 ? (
+                <Typeahead
+                  className="ip-select mt-1"
+                  id="basic-example"
+                  options={custdata}
+                  placeholder="Select Customer"
+                  onChange={(label, event) => selectCust(label)}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+          ) : null}
+          <label className="form-label">Selected Schedules </label>
         </div>
 
         <div className="d-flex col-md-4 field-gap">
@@ -291,7 +290,6 @@ export default function Create({ type }) {
             custName={custName}
             type={type}
           />
-          
         </Tab>
       </Tabs>
     </div>
