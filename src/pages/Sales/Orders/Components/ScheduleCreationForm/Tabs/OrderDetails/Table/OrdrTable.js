@@ -497,9 +497,23 @@ function OrdrTable(props) {
                   {/* <input value={OrdrDetailsItem.UnitPrice} /> */}
                   {OrdrDetailsItem.UnitPrice}
                 </td>
+                {/* <td> */}
+                {/* <input value={OrdrDetailsItem.Qty_Ordered} /> */}
+                {/* {OrdrDetailsItem.Qty_Ordered} */}
+                {/* </td> */}
                 <td>
-                  {/* <input value={OrdrDetailsItem.Qty_Ordered} /> */}
-                  {OrdrDetailsItem.Qty_Ordered}
+                  {" "}
+                  <input
+                    className="table-cell-editor"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                    }}
+                    value={OrdrDetailsItem.Qty_Ordered}
+                    onChange={(e) =>
+                      handleJWMR(i, "Qty_Ordered", e.target.value)
+                    }
+                  />
                 </td>
                 <td>{OrdrDetailsItem.Total}</td>
               </tr>

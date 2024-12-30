@@ -248,8 +248,12 @@ export default function OrderDetails(props) {
     });
     getRequest(endpoints.getProcessLists, (pdata) => {
       let arr = [];
+      // for (let i = 0; i < pdata.length; i++) {
+      //   pdata[i].label = pdata[i].ProcessDescription;
+      //   arr.push(pdata[i]);
+      // }
       for (let i = 0; i < pdata.length; i++) {
-        pdata[i].label = pdata[i].ProcessDescription;
+        pdata[i].label = pdata[i].Operation;
         arr.push(pdata[i]);
       }
 

@@ -94,6 +94,10 @@ export default function ImportExcelModal(props) {
 		XLSX.writeFile(wb, "Import Customer Order Template.xlsx");
 		toast.success("Export excel template successful");
 	}
+
+
+	console.log("props.procdata-excelmdl",props.procdata);
+	
 	return (
 		<>
 			<Modal
