@@ -390,6 +390,9 @@ td {
 	font-weight: 600;
 }
 
+
+.dark-background { background-color: darkblue !important; color: white !important; }
+
 .tableHeaderBGColor {
 	/* background-color: rgb(43, 43, 43); */
 	font-size: 17px;

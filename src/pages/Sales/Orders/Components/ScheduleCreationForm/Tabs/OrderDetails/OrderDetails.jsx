@@ -70,6 +70,10 @@ export default function OrderDetails(props) {
 
 	console.log("BomData", BomData);
 	console.log("selectedItems", selectedItems);
+
+	console.log("lastselected row: ", LastSlctedRow)
+
+	console.log("imprtDwgObj : ", imprtDwgObj);
 	//console.log("schType", scheduleType);
 	//console.log("scheduleOption", scheduleOption);
 	// //console.log("type", OrderData.Order_Type);
@@ -168,7 +172,7 @@ export default function OrderDetails(props) {
 	// SURESH SIR
 
 	let [dxfFileData, setDxfFileData] = useState("");
-	let [selectedDwgId, setSelectedDwgId] = useState(0);
+	let [selectedDwg, setSelectedDwg] = useState(0);
 	let [lengthOfCut, setLengthOfCut] = useState(0);
 	let [noOfPierces, setNoofPierces] = useState(0);
 	let [imprtDwgData, setImprtDwgData] = useState([]);
@@ -1128,6 +1132,7 @@ export default function OrderDetails(props) {
 		//  reader.readAsText(file.asInstanceOf[Blob]);
 		reader.readAsText(file);
 	};
+
 	const [svgContent, setSvgContent] = useState(null);
 
 	const ShowDfxForm = async () => {
@@ -1185,6 +1190,11 @@ export default function OrderDetails(props) {
 	};
 
 	const funcEditDXF = async () => {
+		console.log("func Edit Dxf");
+		if (selectedDwg === window.dxffile.name) {
+			
+			return alert("Selected DXF File is kept Open below");
+		};
 		if (!window.dxffile) return alert("No DXF file selected");
 		try {
 			const request = await fetch("http://127.0.0.1:21341/status", {
@@ -1196,6 +1206,7 @@ export default function OrderDetails(props) {
 			const response = await request.json();
 			if (response.status == "Service is running") {
 				let launchservice = await filetoService(window.dxffile);
+				setSelectedDwg(window.dxffile.name);
 				console.log(launchservice);
 				if (launchservice.status === 200) {
 					if (window.confirm("Click OK to Load the edited file.")) {
@@ -1222,11 +1233,6 @@ export default function OrderDetails(props) {
 									);
 									console.log(newdxf);
 									window.dxffile = newdxf;
-
-									// let qno = quotationNo.replaceAll("/", "_");
-									// let month = qno.split("_")[1]
-									// let monthName = ["January", "Febraury", "March", "April", "May", "June",
-									//   "July", "August", "September", "October", "November", "December"][parseInt(month) - 1]
 
 									let destPath = `\\Wo\\` + OrderNo + "\\DXF";
 									await dxfupload([newdxf], destPath, (res) => {
@@ -1508,12 +1514,6 @@ export default function OrderDetails(props) {
 					];
 				});
 
-				// dxfupload(dwgnamefiles[i], destPath, (res) => {
-				//   console.log(res);
-				// });
-				//  postRequest(endpoints.dxfupload, { files: dwgnamefiles }, (res) => {
-				//   console.log(res);
-				//  });
 				window.dxffiles = dwgnamefiles[i];
 				{
 					console.log("vvv123", dwgnamefiles[i].name);
@@ -1649,8 +1649,8 @@ export default function OrderDetails(props) {
 		formData.append("specficWeight", specificwt); // resp[0].Specific_Wt);
 
 		console.log("Sending to Service");
-		// const getCalcReq = await fetch('http://127.0.0.1:21341/getCalc', {
-		const getCalcReq = await fetch("http://localhost:21341/getCalc", {
+		const getCalcReq = await fetch('http://127.0.0.1:21341/getCalc', {
+			//const getCalcReq = await fetch("http://localhost:21341/getCalc", {
 			//const getCalcReq = await fetch(process.env.GETCALC_API, {
 			method: "POST",
 			headers: {
@@ -1999,27 +1999,29 @@ export default function OrderDetails(props) {
 								<Tab
 									eventKey="drawing"
 									title="Drawing">
-									<button
-										className="button-style"
-										onClick={ShowDfxForm}>
-										Go to DxfView
-									</button>
-									<div
-										id="dxf-content-container"
-										className="dxf-content-container">
-										{/* <iframe
-                      src="http://localhost:5000" // URL of the VB.NET app
-                      title="VBScript Frame"
-                      style={{ width: '50%', height: '300px' }}
-                    /> */}
-
-										{/* {svgContent ? (
-                      <div dangerouslySetInnerHTML={{ __html: svgContent }} />
-                    ) : (
-                      <p>No file loaded yet.</p>
-                    )} */}
+									<div style={{}} >
+										{(LastSlctedRow !== null && LastSlctedRow !== undefined) ? (
+											<table style={{backgroundColor:'#5aa8e0',width:'100%',padding:'10px', fontSize:'12px', fontWeight:'bold'}}>  
+												<tr>
+													<td colspan="2"  ><label>Drawing : {LastSlctedRow.DwgName ?? 'No Drawing'}</label></td>
+													<td colspan="2" ><label>Process: {LastSlctedRow.Operation}</label></td>
+												</tr>
+												<tr>
+													<td style={{ width: "25%" }}><label>Material : {LastSlctedRow.Mtrl}</label></td>
+													<td style={{ width: "25%" }}><label>Thickness : {LastSlctedRow.Thickness}</label></td>
+													<td style={{ width: "25%" }}><label>Quantity : {LastSlctedRow.Qty_Ordered}</label></td>
+													<td style={{ width: "25%" }}><button className="button-style" onClick={ShowDfxForm}>
+														Go to DxfView
+													</button></td>
+												</tr>
+											</table>
+										) : ''}
+										<div
+											id="dxf-content-container"
+											className="dxf-content-container">
+										</div>
+										{/* </iframe> */}
 									</div>
-									{/* <Drawings /> */}
 								</Tab>
 							) : null}
 							<Tab

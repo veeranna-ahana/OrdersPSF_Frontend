@@ -335,7 +335,7 @@ export const endpoints = {
 
 	getScheduleListgetFormDetails: `${API}/ScheduleList/getFormDeatils`,
 	onClickShortClose: `${API}/ScheduleList/shortClose`,
-	onClickSave: `${API}/ScheduleList/save`,
+	//onClickSave: `${API}/ScheduleList/save`,
 	onClickSuspend: `${API}/ScheduleList/suspendButton`,
 	onClickCancel: `${API}/ScheduleList/onClickCancel`,
 	onClickScheduled: `${API}/ScheduleList/ScheduleButton`,
@@ -353,7 +353,7 @@ export const endpoints = {
 	updateRatesPN: `${API}/orderPackingNoteAndInvoice/updateRatesPN`,
 	getScheduleListgetFormDetails: `${API}/ScheduleList/getFormDeatils`,
 	onClickShortClose: `${API}/ScheduleList/shortClose`,
-	onClickSave: `${API}/ScheduleList/save`,
+//	onClickSave: `${API}/ScheduleList/save`,
 	onClickSuspend: `${API}/ScheduleList/suspendButton`,
 	onClickCancel: `${API}/ScheduleList/onClickCancel`,
 	onClickScheduled: `${API}/ScheduleList/ScheduleButton`,
