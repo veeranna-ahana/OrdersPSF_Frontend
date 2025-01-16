@@ -1073,9 +1073,11 @@ export default function OrderDetails(props) {
     }
     //  console.log(data);
     // let API = "http://localhost:6001";
-    console.log("process.env.REACT_APP_API_KEY", process.env.REACT_APP_API_KEY);
+    let API = "http://localhost:4011";
 
-    let API = process.env.REACT_APP_API_KEY;
+    // let API = process.env.REACT_APP_API_KEY;
+    // console.log("process.env.REACT_APP_API_KEY", process.env.REACT_APP_API_KEY);
+
     const rawResponse = await fetch(`${API}/file/uploaddxf`, {
       method: "POST",
       headers: {
@@ -1189,8 +1191,12 @@ export default function OrderDetails(props) {
       //alert("Failed to connect to the DXF service. Please ensure the service is running.");
     }
   };
+  let [selectedDwg, setSelectedDwg] = useState("");
 
   const funcEditDXF = async () => {
+    if (selectedDwg === window.dxffile.name) {
+      return alert("Selected DXF File is kept Open below");
+    }
     if (!window.dxffile) return alert("No DXF file selected");
     try {
       const request = await fetch("http://127.0.0.1:21341/status", {
@@ -1202,6 +1208,7 @@ export default function OrderDetails(props) {
       const response = await request.json();
       if (response.status == "Service is running") {
         let launchservice = await filetoService(window.dxffile);
+        setSelectedDwg(window.dxffile.name);
         console.log(launchservice);
         if (launchservice.status === 200) {
           if (window.confirm("Click OK to Load the edited file.")) {
@@ -2011,25 +2018,77 @@ export default function OrderDetails(props) {
             <Tabs className="nav-tabs tab_font">
               {props.OrderData?.Type === "Profile" ? (
                 <Tab eventKey="drawing" title="Drawing">
-                  <button className="button-style" onClick={ShowDfxForm}>
+                  <div style={{}}>
+                    {LastSlctedRow !== null && LastSlctedRow !== undefined ? (
+                      <table
+                        style={{
+                          backgroundColor: "#5aa8e0",
+                          width: "100%",
+                          padding: "10px",
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <tr>
+                          <td colspan="2">
+                            <label>
+                              Drawing : {LastSlctedRow.DwgName ?? "No Drawing"}
+                            </label>
+                          </td>
+                          <td colspan="2">
+                            <label>Process: {LastSlctedRow.Operation}</label>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{ width: "25%" }}>
+                            <label>Material : {LastSlctedRow.Mtrl}</label>
+                          </td>
+                          <td style={{ width: "25%" }}>
+                            <label>Thickness : {LastSlctedRow.Thickness}</label>
+                          </td>
+                          <td style={{ width: "25%" }}>
+                            <label>
+                              Quantity : {LastSlctedRow.Qty_Ordered}
+                            </label>
+                          </td>
+                          <td style={{ width: "25%" }}>
+                            <button
+                              className="button-style"
+                              onClick={ShowDfxForm}
+                            >
+                              Go to DxfView
+                            </button>
+                          </td>
+                        </tr>
+                      </table>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      id="dxf-content-container"
+                      className="dxf-content-container"
+                    ></div>
+                    {/* </iframe> */}
+                  </div>
+                  {/* <button className="button-style" onClick={ShowDfxForm}>
                     Go to DxfView
-                  </button>
-                  <div
+                  </button> */}
+                  {/* <div
                     id="dxf-content-container"
                     className="dxf-content-container"
-                  >
-                    {/* <iframe
+                  > */}
+                  {/* <iframe
                       src="http://localhost:5000" // URL of the VB.NET app
                       title="VBScript Frame"
                       style={{ width: '50%', height: '300px' }}
                     /> */}
 
-                    {/* {svgContent ? (
+                  {/* {svgContent ? (
                       <div dangerouslySetInnerHTML={{ __html: svgContent }} />
                     ) : (
                       <p>No file loaded yet.</p>
                     )} */}
-                  </div>
+                  {/* </div> */}
                   {/* <Drawings /> */}
                 </Tab>
               ) : null}

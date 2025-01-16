@@ -339,6 +339,8 @@ function OrdrTable(props) {
 
         // Convert only for the "intiger" columns
         if (
+          sortConfig.key === "LOC" ||
+          sortConfig.key === "Holes" ||
           sortConfig.key === "JWCost" ||
           sortConfig.key === "MtrlCost" ||
           sortConfig.key === "UnitPrice" ||
@@ -422,8 +424,8 @@ function OrdrTable(props) {
             <th onClick={() => requestSort("InspLevel")}>Insp Level</th>
             <th onClick={() => requestSort("tolerance")}>Tolerance</th>
             <th onClick={() => requestSort("PackingLevel")}>Packing Level</th>
-            <th>LOC</th>
-            <th>Pierces</th>
+            <th onClick={() => requestSort("LOC")}>LOC</th>
+            <th onClick={() => requestSort("Holes")}>Pierces</th>
             <th onClick={() => requestSort("JWCost")}>JW Cost</th>
             <th onClick={() => requestSort("MtrlCost")}>Mtrl Cost</th>
             <th onClick={() => requestSort("UnitPrice")}>Unit Rate</th>
@@ -456,7 +458,7 @@ function OrdrTable(props) {
                     type="checkbox"
                     id={`select-checkbox-${i}`}
                     // onChange={() => selectItem(OrdrDetailsItem, true)} // Trigger multi-row selection
-                    // checked={selectedItems.includes(OrdrDetailsItem)}
+                    checked={selectedItems.includes(OrdrDetailsItem)}
                   />
                 </td>
                 <td>{OrdrDetailsItem.DwgName}</td>
@@ -527,7 +529,11 @@ function OrdrTable(props) {
                     }
                   />
                 </td>
-                <td>{OrdrDetailsItem.Total}</td>
+                <td>
+                  {parseFloat(
+                    OrdrDetailsItem.UnitPrice * OrdrDetailsItem.Qty_Ordered
+                  ).toFixed(2)}
+                </td>
               </tr>
             );
           })}

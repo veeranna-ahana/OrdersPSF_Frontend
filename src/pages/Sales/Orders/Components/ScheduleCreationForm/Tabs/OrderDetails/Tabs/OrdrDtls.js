@@ -296,11 +296,11 @@ function OrdrDtls(props) {
 										(props.OrderData?.Order_Type === "Open" &&
 											OrderData?.Order_Status === "Recorded")
 									}>
-									<option
+									{/* <option
 										value=""
 										selected>
 										** Select **
-									</option>
+									</option> */}
 									<option value={"Customer"}>Customer</option>
 									<option value={"Magod"}>Magod</option>
 								</select>
@@ -322,12 +322,12 @@ function OrdrDtls(props) {
 									value={ordrDetailsChange.Operation}
 									// onChange={selectProc}
 									onChange={handleChange}>
-									<option
+									{/* <option
 										value=""
 										disabled
 										selected>
 										** Select **
-									</option>
+									</option> */}
 									{/* {procdata.map((proc) => {
 										// Check if "Service" column has non-zero values
 										if (props.OrderData?.Type === "Service") {
@@ -585,12 +585,12 @@ function OrdrDtls(props) {
 										(props.OrderData?.Order_Type === "Open" &&
 											OrderData?.Order_Status === "Recorded")
 									}>
-									<option
+									{/* <option
 										value=""
 										disabled
 										selected>
 										** Select **
-									</option>
+									</option> */}
 									{inspdata.map((insplvl) => {
 										return (
 											<option value={insplvl["InspLevel"]}>
@@ -628,12 +628,12 @@ function OrdrDtls(props) {
 										(props.OrderData?.Order_Type === "Open" &&
 											OrderData?.Order_Status === "Recorded")
 									}>
-									<option
+									{/* <option
 										value=""
 										disabled
 										selected>
 										** Select **
-									</option>
+									</option> */}
 									{packdata.map((packlvl) => {
 										return (
 											<option value={packlvl["PkngLevel"]}>

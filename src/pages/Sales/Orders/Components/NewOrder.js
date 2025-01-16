@@ -129,12 +129,16 @@ function NewOrder(props) {
 
   let selectCust = async (e) => {
     let cust;
+    console.log("custdata.length", custdata.length);
+
     for (let i = 0; i < custdata.length; i++) {
       if (custdata[i]["Cust_Code"] === e[0].Cust_Code) {
         cust = custdata[i];
         break;
       }
     }
+    console.log("cust", cust);
+
     setCustCode(cust.Cust_Code);
     setCustomerContact(
       cust.PurchaseContact1
