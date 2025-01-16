@@ -186,6 +186,8 @@ export default function PrepareScheduleTab({
     );
   };
 
+  console.log("beforecombine...", beforecombine);
+
   useEffect(() => {
     getAlldataAfterCombineSchedule();
   }, [combinedScheduleNo]);

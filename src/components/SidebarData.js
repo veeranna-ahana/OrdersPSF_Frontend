@@ -34,366 +34,427 @@ import { useNavigate } from "react-router-dom";
 const previousMenuUrl = process.env.REACT_APP_PREVIOUS_MENU_URL;
 
 export const customerSidebar = [
-	{
-		title: "Profile",
-		icon: <FiCpu />,
-		iconClosed: <RiIcons.RiArrowDownSFill />,
-		iconOpened: <RiIcons.RiArrowUpSFill />,
-		subNav: [
-			{
-				title: "New Order",
-				path: "/Orders/Profile/NewOrder",
-				icon: <BsServer />,
-			},
-			{
-				title: "Find Order",
-				path: "/Orders/Profile/FindOrder",
-				icon: <VscServerProcess />,
-			},
-			{
-				title: "Find Schedule",
-				path: "/Orders/Profile/FindScheduleForm",
-				icon: <VscServerProcess />,
-			},
-			{
-				title: "Order List",
-				icon: <FiCpu />,
-				iconClosed: <RiIcons.RiArrowDownSFill />,
-				iconOpened: <RiIcons.RiArrowUpSFill />,
-				subNav: [
-					{
-						title: "Created",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/OrderList/Created",
-					},
-					{
-						title: "Recorded",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/OrderList/Recorded",
-					},
-					{
-						title: "Processing",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/OrderList/Processing",
-					},
-					{
-						title: "Completed",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/OrderList/Completed",
-					},
-					{
-						title: "Produced",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/OrderList/Produced",
-					},
-					{
-						title: "Packed",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/OrderList/Packed",
-					},
-					{
-						title: "Dispatched",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/OrderList/Dispatched",
-					},
-					{
-						title: "All",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/OrderList/All",
-					},
-				],
-			},
-			{
-				title: "Fixtures Order List",
-				icon: <FiCpu />,
-				iconClosed: <RiIcons.RiArrowDownSFill />,
-				iconOpened: <RiIcons.RiArrowUpSFill />,
-				subNav: [
-					{
-						title: "Recorded",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/FixturesOrderList/Recorded",
-					},
-					{
-						title: "Processing",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/FixturesOrderList/Processing",
-					},
-					{
-						title: "Completed",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/FixturesOrderList/Completed",
-					},
-					{
-						title: "Ready",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/FixturesOrderList/Ready",
-					},
-					{
-						title: "Handed Over",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Profile/FixturesOrderList/HandedOver",
-					},
-				],
-			},
-			{
-				title: "Internal Order List",
-				icon: <FiCpu />,
-				iconClosed: <RiIcons.RiArrowDownSFill />,
-				iconOpened: <RiIcons.RiArrowUpSFill />,
-				subNav: [
-					{
-						title: "Recorded",
-						path: "/Orders/Profile/InternalOrderList/Recorded",
-					},
-					{
-						title: "Processing",
-						path: "/Orders/Profile/InternalOrderList/Processing",
-					},
-					{
-						title: "Completed",
-						path: "/Orders/Profile/InternalOrderList/Completed",
-					},
-					{
-						title: "Ready",
-						path: "/Orders/Profile/InternalOrderList/Ready",
-					},
-					{
-						title: "Handed Over",
-						path: "/Orders/Profile/InternalOrderList/HandedOver",
-					},
-				],
-			},
-			// {
-			//   title: "Print Lable",
-			//   // path: "/production/setup/process",
-			//   icon: <VscServerProcess />,
-			// },
-		],
-	},
-	{
-		title: "Combined Schedule",
-		icon: <SiRedhatopenshift />,
-		iconClosed: <RiIcons.RiArrowDownSFill />,
-		iconOpened: <RiIcons.RiArrowUpSFill />,
-		subNav: [
-			{
-				title: "Job Work",
-				icon: <BsServer />,
-				subNav: [
-					{
-						title: "Create",
-						path: "/Orders/JobWork/CREATE",
-						icon: <AiIcons.AiOutlineArrowRight />,
-					},
-					// {
-					//   title: "Open",
-					//   path: "/Orders/JobWork/OPEN",
-					//   icon: <AiIcons.AiOutlineArrowRight />,
-					// },
-					{
-						title: "ScheduleList",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						subNav: [
-							{
-								title: "Order",
-								path: "/Orders/JobWork/ScheduleList/ORDER",
-								icon: <AiIcons.AiOutlineArrowRight />,
-							},
-							{
-								title: "Closed",
-								path: "/Orders/JobWork/ScheduleList/Closed",
-								icon: <AiIcons.AiOutlineArrowRight />,
-							},
-						],
-					},
-				],
-			},
-			{
-				title: "Sales",
-				path: "/Orders/Sales",
-				icon: <VscServerProcess />,
-				subNav: [
-					{
-						title: "Create",
-						path: "/Orders/Sales/Create",
-						icon: <AiIcons.AiOutlineArrowRight />,
-					},
-					// {
-					//   title: "Open",
-					//   path: "/Orders/Sales/Open",
-					//   icon: <AiIcons.AiOutlineArrowRight />,
-					// },
-					{
-						title: "ScheduleList",
-						// path: "/Orders/Sales/ScheduleList",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						subNav: [
-							{
-								title: "Order",
-								path: "/Orders/Sales/ScheduleList/Order",
-								icon: <AiIcons.AiOutlineArrowRight />,
-							},
-							{
-								title: "Closed",
-								path: "/Orders/Sales/ScheduleList/Closed",
-								icon: <AiIcons.AiOutlineArrowRight />,
-							},
-						],
-					},
-				],
-			},
-		],
-	},
-	{
-		title: "Fabrication",
-		icon: <FaDropbox />,
-		iconClosed: <RiIcons.RiArrowDownSFill />,
-		iconOpened: <RiIcons.RiArrowUpSFill />,
-		subNav: [
-			{
-				title: "New Order",
-				path: "/Orders/Fabrication/NewOrder",
-				icon: <BsServer />,
-			},
+  {
+    title: "Profile",
+    icon: <FiCpu />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: "New Order",
+        path: "/Orders/Profile/NewOrder",
+        icon: <BsServer />,
+      },
+      {
+        title: "Find Order",
+        path: "/Orders/Profile/FindOrder",
+        icon: <VscServerProcess />,
+      },
+      {
+        title: "Find Schedule",
+        path: "/Orders/Profile/FindScheduleForm",
+        icon: <VscServerProcess />,
+      },
+      {
+        title: "Order List",
+        icon: <FiCpu />,
+        iconClosed: <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        subNav: [
+          {
+            title: "Created",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/OrderList/Created",
+          },
+          {
+            title: "Recorded",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/OrderList/Recorded",
+          },
+          {
+            title: "Processing",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/OrderList/Processing",
+          },
+          {
+            title: "Completed",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/OrderList/Completed",
+          },
+          {
+            title: "Produced",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/OrderList/Produced",
+          },
+          {
+            title: "Packed",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/OrderList/Packed",
+          },
+          {
+            title: "Dispatched",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/OrderList/Dispatched",
+          },
+          {
+            title: "All",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/OrderList/All",
+          },
+        ],
+      },
+      // {
+      // 	title: "Fixtures Order List",
+      // 	icon: <FiCpu />,
+      // 	iconClosed: <RiIcons.RiArrowDownSFill />,
+      // 	iconOpened: <RiIcons.RiArrowUpSFill />,
+      // 	subNav: [
+      // 		{
+      // 			title: "Recorded",
+      // 			icon: <AiIcons.AiOutlineArrowRight />,
+      // 			path: "/Orders/Profile/FixturesOrderList/Recorded",
+      // 		},
+      // 		{
+      // 			title: "Processing",
+      // 			icon: <AiIcons.AiOutlineArrowRight />,
+      // 			path: "/Orders/Profile/FixturesOrderList/Processing",
+      // 		},
+      // 		{
+      // 			title: "Completed",
+      // 			icon: <AiIcons.AiOutlineArrowRight />,
+      // 			path: "/Orders/Profile/FixturesOrderList/Completed",
+      // 		},
+      // 		{
+      // 			title: "Ready",
+      // 			icon: <AiIcons.AiOutlineArrowRight />,
+      // 			path: "/Orders/Profile/FixturesOrderList/Ready",
+      // 		},
+      // 		{
+      // 			title: "Handed Over",
+      // 			icon: <AiIcons.AiOutlineArrowRight />,
+      // 			path: "/Orders/Profile/FixturesOrderList/HandedOver",
+      // 		},
+      // 	],
+      // },
+    //   {
+    //     title: "Internal Order List",
+    //     icon: <FiCpu />,
+    //     iconClosed: <RiIcons.RiArrowDownSFill />,
+    //     iconOpened: <RiIcons.RiArrowUpSFill />,
+    //     subNav: [
+    //       {
+    //         title: "Recorded",
+    //         path: "/Orders/Profile/InternalOrderList/Recorded",
+    //       },
+    //       {
+    //         title: "Processing",
+    //         path: "/Orders/Profile/InternalOrderList/Processing",
+    //       },
+    //       {
+    //         title: "Completed",
+    //         path: "/Orders/Profile/InternalOrderList/Completed",
+    //       },
+    //       {
+    //         title: "Ready",
+    //         path: "/Orders/Profile/InternalOrderList/Ready",
+    //       },
+    //       {
+    //         title: "Handed Over",
+    //         path: "/Orders/Profile/InternalOrderList/HandedOver",
+    //       },
+    //     ],
+    //   },
+      // {
+      //   title: "Print Lable",
+      //   // path: "/production/setup/process",
+      //   icon: <VscServerProcess />,
+      // },
+    ],
+  },
+  {
+    title: "Combined Schedule",
+    icon: <SiRedhatopenshift />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: "Job Work",
+        icon: <BsServer />,
+        subNav: [
+          {
+            title: "Create",
+            path: "/Orders/JobWork/CREATE",
+            icon: <AiIcons.AiOutlineArrowRight />,
+          },
+          // {
+          //   title: "Open",
+          //   path: "/Orders/JobWork/OPEN",
+          //   icon: <AiIcons.AiOutlineArrowRight />,
+          // },
+          {
+            title: "ScheduleList",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            subNav: [
+              {
+                title: "Order",
+                path: "/Orders/JobWork/ScheduleList/ORDER",
+                icon: <AiIcons.AiOutlineArrowRight />,
+              },
+              {
+                title: "Closed",
+                path: "/Orders/JobWork/ScheduleList/Closed",
+                icon: <AiIcons.AiOutlineArrowRight />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Sales",
+        path: "/Orders/Sales",
+        icon: <VscServerProcess />,
+        subNav: [
+          {
+            title: "Create",
+            path: "/Orders/Sales/Create",
+            icon: <AiIcons.AiOutlineArrowRight />,
+          },
+          // {
+          //   title: "Open",
+          //   path: "/Orders/Sales/Open",
+          //   icon: <AiIcons.AiOutlineArrowRight />,
+          // },
+          {
+            title: "ScheduleList",
+            // path: "/Orders/Sales/ScheduleList",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            subNav: [
+              {
+                title: "Order",
+                path: "/Orders/Sales/ScheduleList/Order",
+                icon: <AiIcons.AiOutlineArrowRight />,
+              },
+              {
+                title: "Closed",
+                path: "/Orders/Sales/ScheduleList/Closed",
+                icon: <AiIcons.AiOutlineArrowRight />,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Fabrication",
+    icon: <FaDropbox />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: "New Order",
+        path: "/Orders/Fabrication/NewOrder",
+        icon: <BsServer />,
+      },
 
-			{
-				title: "Find Order",
-				path: "/Orders/Fabrication/FindOrder",
-				icon: <BsServer />,
-			},
+      {
+        title: "Find Order",
+        path: "/Orders/Fabrication/FindOrder",
+        icon: <BsServer />,
+      },
 
-			{
-				title: "Order List",
-				icon: <FiCpu />,
-				iconClosed: <RiIcons.RiArrowDownSFill />,
-				iconOpened: <RiIcons.RiArrowUpSFill />,
-				subNav: [
-					{
-						title: "Created",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Fabrication/OrderList/Created",
-					},
+      {
+        title: "Order List",
+        icon: <FiCpu />,
+        iconClosed: <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        subNav: [
+          {
+            title: "Created",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Fabrication/OrderList/Created",
+          },
 
-					{
-						title: "Recorded",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Fabrication/OrderList/Recorded",
-					},
-					{
-						title: "Processing",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Fabrication/OrderList/Processing",
-					},
-					{
-						title: "Completed",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Fabrication/OrderList/Completed",
-					},
-					{
-						title: "Produced",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Fabrication/OrderList/Produced",
-					},
-					{
-						title: "Packed",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Fabrication/OrderList/Packed",
-					},
-					{
-						title: "Dispatched",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Fabrication/OrderList/Dispatched",
-					},
+          {
+            title: "Recorded",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Fabrication/OrderList/Recorded",
+          },
+          {
+            title: "Processing",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Fabrication/OrderList/Processing",
+          },
+          {
+            title: "Completed",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Fabrication/OrderList/Completed",
+          },
+          {
+            title: "Produced",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Fabrication/OrderList/Produced",
+          },
+          {
+            title: "Packed",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Fabrication/OrderList/Packed",
+          },
+          {
+            title: "Dispatched",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Fabrication/OrderList/Dispatched",
+          },
 
-					{
-						title: "All",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Fabrication/OrderList/All",
-					},
-				],
-			},
-		],
-	},
-	{
-		title: "Service",
-		icon: <MdHomeRepairService />,
-		iconClosed: <RiIcons.RiArrowDownSFill />,
-		iconOpened: <RiIcons.RiArrowUpSFill />,
-		subNav: [
-			{
-				title: "New Order",
-				path: "/Orders/Service/NewOrder",
-				icon: <BsServer />,
-			},
+          {
+            title: "All",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Fabrication/OrderList/All",
+          },
+        ],
+      },
+	   {
+        title: "Internal Order List",
+        icon: <FiCpu />,
+        iconClosed: <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        subNav: [
+          {
+            title: "Recorded",
+            path: "/Orders/Profile/InternalOrderList/Recorded",
+          },
+          {
+            title: "Processing",
+            path: "/Orders/Profile/InternalOrderList/Processing",
+          },
+          {
+            title: "Completed",
+            path: "/Orders/Profile/InternalOrderList/Completed",
+          },
+          {
+            title: "Ready",
+            path: "/Orders/Profile/InternalOrderList/Ready",
+          },
+          {
+            title: "Handed Over",
+            path: "/Orders/Profile/InternalOrderList/HandedOver",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Service",
+    icon: <MdHomeRepairService />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: "New Order",
+        path: "/Orders/Service/NewOrder",
+        icon: <BsServer />,
+      },
 
-			{
-				title: "Find Order",
-				path: "/Orders/Service/FindOrder",
-				icon: <BsServer />,
-			},
+      {
+        title: "Find Order",
+        path: "/Orders/Service/FindOrder",
+        icon: <BsServer />,
+      },
 
-			{
-				title: "Order List",
-				icon: <FiCpu />,
-				iconClosed: <RiIcons.RiArrowDownSFill />,
-				iconOpened: <RiIcons.RiArrowUpSFill />,
-				subNav: [
-					{
-						title: "Created",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Service/OrderList/Created",
-					},
+      {
+        title: "Order List",
+        icon: <FiCpu />,
+        iconClosed: <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        subNav: [
+          {
+            title: "Created",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Service/OrderList/Created",
+          },
 
-					{
-						title: "Recorded",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Service/OrderList/Recorded",
-					},
-					{
-						title: "Completed",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Service/OrderList/Completed",
-					},
-					{
-						title: "Processing",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Service/OrderList/Processing",
-					},
-					{
-						title: "Produced",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Service/OrderList/Produced",
-					},
-					{
-						title: "Packed",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Service/OrderList/Packed",
-					},
-					{
-						title: "Dispatched",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Service/OrderList/Dispatched",
-					},
+          {
+            title: "Recorded",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Service/OrderList/Recorded",
+          },
+          {
+            title: "Completed",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Service/OrderList/Completed",
+          },
+          {
+            title: "Processing",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Service/OrderList/Processing",
+          },
+          {
+            title: "Produced",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Service/OrderList/Produced",
+          },
+          {
+            title: "Packed",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Service/OrderList/Packed",
+          },
+          {
+            title: "Dispatched",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Service/OrderList/Dispatched",
+          },
 
-					{
-						title: "All",
-						icon: <AiIcons.AiOutlineArrowRight />,
-						path: "/Orders/Service/OrderList/All",
-					},
-				],
-			},
-		],
-	},
-	{
-		title: "Previous Menu",
-		// path: "http://172.16.20.61:3000/home",
-		path: previousMenuUrl,
-		icon: <MdIcon.MdPreview />,
-		iconClosed: <RiIcons.RiArrowDownSFill />,
-		iconOpened: <RiIcons.RiArrowUpSFill />,
-		external: true,
-	},
+          {
+            title: "All",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Service/OrderList/All",
+          },
+        ],
+      },
+      {
+        title: "Fixtures Order List",
+        icon: <FiCpu />,
+        iconClosed: <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        subNav: [
+          {
+            title: "Recorded",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/FixturesOrderList/Recorded",
+          },
+          {
+            title: "Processing",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/FixturesOrderList/Processing",
+          },
+          {
+            title: "Completed",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/FixturesOrderList/Completed",
+          },
+          {
+            title: "Ready",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/FixturesOrderList/Ready",
+          },
+          {
+            title: "Handed Over",
+            icon: <AiIcons.AiOutlineArrowRight />,
+            path: "/Orders/Profile/FixturesOrderList/HandedOver",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Previous Menu",
+    // path: "http://172.16.20.61:3000/home",
+    path: previousMenuUrl,
+    icon: <MdIcon.MdPreview />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    external: true,
+  },
 ];
 
 export const adminSidebar = [

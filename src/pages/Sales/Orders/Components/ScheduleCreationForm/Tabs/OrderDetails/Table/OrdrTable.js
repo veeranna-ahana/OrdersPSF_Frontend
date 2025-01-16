@@ -263,6 +263,8 @@ function OrdrTable(props) {
     ordrDetailsChange,
     setordrDetailsChange,
     handleJWMR,
+    handleRowSelection,
+    handleMultipleRowSelection,
   } = props;
 
   useEffect(() => {
@@ -337,6 +339,8 @@ function OrdrTable(props) {
 
         // Convert only for the "intiger" columns
         if (
+          sortConfig.key === "LOC" ||
+          sortConfig.key === "Holes" ||
           sortConfig.key === "JWCost" ||
           sortConfig.key === "MtrlCost" ||
           sortConfig.key === "UnitPrice" ||
@@ -409,6 +413,7 @@ function OrdrTable(props) {
           }}
         >
           <tr>
+            <th style={{ whiteSpace: "nowrap" }}>Select</th>
             <th onClick={() => requestSort("DwgName")}>Drawing/Part Name</th>
             {props.OrderData?.Type === "Profile" ? (
               <th style={{ whiteSpace: "nowrap" }}>Dwg Exists</th>
@@ -419,8 +424,8 @@ function OrdrTable(props) {
             <th onClick={() => requestSort("InspLevel")}>Insp Level</th>
             <th onClick={() => requestSort("tolerance")}>Tolerance</th>
             <th onClick={() => requestSort("PackingLevel")}>Packing Level</th>
-            <th>LOC</th>
-            <th>Pierces</th>
+            <th onClick={() => requestSort("LOC")}>LOC</th>
+            <th onClick={() => requestSort("Holes")}>Pierces</th>
             <th onClick={() => requestSort("JWCost")}>JW Cost</th>
             <th onClick={() => requestSort("MtrlCost")}>Mtrl Cost</th>
             <th onClick={() => requestSort("UnitPrice")}>Unit Rate</th>
@@ -434,6 +439,7 @@ function OrdrTable(props) {
             return (
               <tr
                 key={i}
+                // onClick={() => selectItem(OrdrDetailsItem, false)}
                 onClick={() => selectItem(OrdrDetailsItem, imprtDwgObj)}
                 // onClick={() => selectedRowItem(OrdrDetailsItem, imprtDwgObj)}
                 style={{
@@ -447,6 +453,14 @@ function OrdrTable(props) {
 
                 data-srlstatus={OrdrDetailsItem.SrlStatus}
               >
+                <td>
+                  <Form.Check
+                    type="checkbox"
+                    id={`select-checkbox-${i}`}
+                    // onChange={() => selectItem(OrdrDetailsItem, true)} // Trigger multi-row selection
+                    checked={selectedItems.includes(OrdrDetailsItem)}
+                  />
+                </td>
                 <td>{OrdrDetailsItem.DwgName}</td>
                 {props.OrderData?.Type === "Profile" ? (
                   <td>
@@ -497,11 +511,29 @@ function OrdrTable(props) {
                   {/* <input value={OrdrDetailsItem.UnitPrice} /> */}
                   {OrdrDetailsItem.UnitPrice}
                 </td>
+                {/* <td> */}
+                {/* <input value={OrdrDetailsItem.Qty_Ordered} /> */}
+                {/* {OrdrDetailsItem.Qty_Ordered} */}
+                {/* </td> */}
                 <td>
-                  {/* <input value={OrdrDetailsItem.Qty_Ordered} /> */}
-                  {OrdrDetailsItem.Qty_Ordered}
+                  {" "}
+                  <input
+                    className="table-cell-editor"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                    }}
+                    value={OrdrDetailsItem.Qty_Ordered}
+                    onChange={(e) =>
+                      handleJWMR(i, "Qty_Ordered", e.target.value)
+                    }
+                  />
                 </td>
-                <td>{OrdrDetailsItem.Total}</td>
+                <td>
+                  {parseFloat(
+                    OrdrDetailsItem.UnitPrice * OrdrDetailsItem.Qty_Ordered
+                  ).toFixed(2)}
+                </td>
               </tr>
             );
           })}

@@ -603,12 +603,12 @@ function ImportDwgModal(props) {
 														id="stroperation"
 														name="impDwgProcess"
 														onChange={selectProc}>
-														<option
+														{/* <option
 															value=""
 															disabled
 															selected>
 															** Select **
-														</option>
+														</option> */}
 														{/* {procdata?.map((proc) => {
 															return (
 																<option value={proc["ProcessDescription"]}>
@@ -682,12 +682,12 @@ function ImportDwgModal(props) {
 													id="strsource"
 													name="impDwgSource"
 													onChange={selectMtrlSrc}>
-													<option
+													{/* <option
 														value=""
 														disabled
 														selected>
 														** Select **
-													</option>
+													</option> */}
 													<option value={"Customer"}>Customer</option>
 													<option value={"Magod"}>Magod</option>
 												</select>
@@ -706,12 +706,12 @@ function ImportDwgModal(props) {
 													id="strtolerance"
 													name="impDwgTolerance"
 													onChange={selectTolerance}>
-													<option
+													{/* <option
 														value=""
 														disabled
 														selected>
 														** Select **
-													</option>
+													</option> */}
 													{tolerancedata?.map((toltype) => {
 														return (
 															<option value={toltype["ToleranceType"]}>
@@ -739,12 +739,12 @@ function ImportDwgModal(props) {
 													className="ip-select"
 													name="impDwgInspLvl"
 													onChange={selectInsp}>
-													<option
+													{/* <option
 														value=""
 														disabled
 														selected>
 														** Select **
-													</option>
+													</option> */}
 													{inspdata?.map((insplvl) => {
 														return (
 															<option value={insplvl["InspLevel"]}>
@@ -767,12 +767,12 @@ function ImportDwgModal(props) {
 													className="ip-select"
 													name="impDwgPkngLvl"
 													onChange={selectPack}>
-													<option
+													{/* <option
 														value=""
 														disabled
 														selected>
 														** Select **
-													</option>
+													</option> */}
 													{packdata.map((packlvl) => {
 														return (
 															<option value={packlvl["PkngLevel"]}>
