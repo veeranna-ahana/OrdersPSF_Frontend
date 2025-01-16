@@ -31,6 +31,9 @@ export default function CombinedScheduleDetailsTab({
     }
   };
 
+  console.log('beforecombine Jobwork', beforecombine);
+  
+
   return (
     <>
       {type === "Sales" ? (

@@ -1,17 +1,6 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-// import ProfileJobWorkPrint from '../Profile_JobWork/ProfileJobWorkPrint';
-
-import {
-  PDFDownloadLink,
-  Page,
-  Text,
-  View,
-  Document,
-  StyleSheet,
-  PDFViewer,
-  pdf
-} from "@react-pdf/renderer";
+import { PDFViewer, pdf } from "@react-pdf/renderer";
 import PrintPDF from "./PrintPDF";
 import axios from "axios";
 import { baseURL } from "../../../api/baseUrl";
@@ -23,39 +12,52 @@ export default function PrintModal({
   setOpenPrintModal,
   selectedRow,
 }) {
-  // console.log("in Print Modal",selectedWeek)
-
   const [fullscreen, setFullscreen] = useState(true);
-  console.log("selectedRow is", selectedRow);
 
+  // Function to save the PDF to the server
   const savePdfToServer = async () => {
-
     try {
-      const adjustment = "CombinedScheduleForm"; // Replace with the actual name you want to send
+      const adjustment = "CombinedSchedule"; // Replace with the desired adjustment name
 
-      // Step 1: Call the API to set the adjustment name
-      await axios.post(baseURL + `/PDF/set-adjustment-name`, { adjustment });
-      const blob = await pdf(
-        <PrintPDF formdata={selectedRow} />
-      ).toBlob();
+      // Step 1: Set the adjustment name on the server
+      await axios.post(`${baseURL}/PDF/set-adjustment-name`, { adjustment });
 
+      // Step 2: Generate the PDF as a Blob
+      const blob = await pdf(<PrintPDF formdata={selectedRow} />).toBlob();
+
+      console.log("Blob size:", blob.size);
+      if (blob.size === 0) {
+        console.error("Generated PDF blob is empty!");
+      }
+
+      // Step 3: Create a File object for the PDF
       const file = new File([blob], "GeneratedPDF.pdf", {
         type: "application/pdf",
       });
 
-      const formData = new FormData();
+      console.log("File type:", file.type);
+      console.log("File size:", file.size);
+      if (file.size === 0) {
+        console.error("The file is empty or corrupted!");
+      }
 
+      // Step 4: Create FormData and append the file
+      const formData = new FormData();
       formData.append("file", file);
 
-      const response = await axios.post(baseURL + `/PDF/save-pdf`, formData, {
+      // Step 5: Send the PDF file to the server
+      const response = await axios.post(`${baseURL}/PDF/save-pdf`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
       if (response.status === 200) {
         toast.success("PDF saved successfully!");
+      } else {
+        toast.error("Failed to save PDF. Please try again.");
       }
     } catch (error) {
       console.error("Error saving PDF to server:", error);
+      toast.error("An error occurred while saving the PDF.");
     }
   };
 
@@ -69,7 +71,7 @@ export default function PrintModal({
         <Modal.Header closeButton>
           <Modal.Title>Service</Modal.Title>
           <button
-            style={{ marginLeft: "70%" }}
+            style={{ marginLeft: "80%" }}
             className="button-style group-button"
             onClick={savePdfToServer}
           >
@@ -77,11 +79,9 @@ export default function PrintModal({
           </button>
         </Modal.Header>
         <Modal.Body>
-          <Fragment>
-            <PDFViewer width="1200" height="600" filename="somename.pdf">
-              <PrintPDF formdata={selectedRow} />
-            </PDFViewer>
-          </Fragment>
+          <PDFViewer width="100%" height="600" filename="GeneratedPDF.pdf">
+            <PrintPDF formdata={selectedRow} />
+          </PDFViewer>
         </Modal.Body>
       </Modal>
     </div>
