@@ -226,6 +226,8 @@ export default function PrepareScheduleTab({
         type,
       },
       (response) => {
+        console.log('response Jobwork', response.data);
+        
         setBeforeCombine(response);
       }
     );
@@ -241,6 +243,8 @@ export default function PrepareScheduleTab({
         if (rowselectleft.length <= 1) {
           validationModal();
         } else {
+          console.log('Hello Jobwork');
+          
           postRequest(
             endpoints.CreateSchedule,
             {
@@ -256,7 +260,8 @@ export default function PrepareScheduleTab({
                 "response after create is",
                 response.combinedScheduleNos[0],
                 "another is",
-                response.combinedScheduleNos
+                response.combinedScheduleNos,
+                "OrderDetails", response.odrdesDetails
               );
               setCombinedScheduleNo(response.combinedScheduleNos[0]);
               openCombineScheduleModal();
