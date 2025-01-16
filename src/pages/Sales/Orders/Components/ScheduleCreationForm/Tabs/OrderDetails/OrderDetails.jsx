@@ -66,6 +66,8 @@ export default function OrderDetails(props) {
     selectedRowItem,
     Dwglist,
     handleJWMR,
+    handleRowSelection,
+    handleMultipleRowSelection,
   } = props;
 
   console.log("BomData", BomData);
@@ -2001,6 +2003,8 @@ export default function OrderDetails(props) {
               ordrDetailsChange={ordrDetailsChange}
               setordrDetailsChange={setordrDetailsChange}
               handleJWMR={handleJWMR}
+              handleRowSelection={handleRowSelection}
+              handleMultipleRowSelection={handleMultipleRowSelection}
             />
           </div>
           <div className="col-md-6">

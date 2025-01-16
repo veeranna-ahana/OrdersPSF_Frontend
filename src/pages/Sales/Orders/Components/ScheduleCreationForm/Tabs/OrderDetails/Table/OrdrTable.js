@@ -263,6 +263,8 @@ function OrdrTable(props) {
     ordrDetailsChange,
     setordrDetailsChange,
     handleJWMR,
+    handleRowSelection,
+    handleMultipleRowSelection,
   } = props;
 
   useEffect(() => {
@@ -409,6 +411,7 @@ function OrdrTable(props) {
           }}
         >
           <tr>
+            <th style={{ whiteSpace: "nowrap" }}>Select</th>
             <th onClick={() => requestSort("DwgName")}>Drawing/Part Name</th>
             {props.OrderData?.Type === "Profile" ? (
               <th style={{ whiteSpace: "nowrap" }}>Dwg Exists</th>
@@ -434,6 +437,7 @@ function OrdrTable(props) {
             return (
               <tr
                 key={i}
+                // onClick={() => selectItem(OrdrDetailsItem, false)}
                 onClick={() => selectItem(OrdrDetailsItem, imprtDwgObj)}
                 // onClick={() => selectedRowItem(OrdrDetailsItem, imprtDwgObj)}
                 style={{
@@ -447,6 +451,14 @@ function OrdrTable(props) {
 
                 data-srlstatus={OrdrDetailsItem.SrlStatus}
               >
+                <td>
+                  <Form.Check
+                    type="checkbox"
+                    id={`select-checkbox-${i}`}
+                    // onChange={() => selectItem(OrdrDetailsItem, true)} // Trigger multi-row selection
+                    // checked={selectedItems.includes(OrdrDetailsItem)}
+                  />
+                </td>
                 <td>{OrdrDetailsItem.DwgName}</td>
                 {props.OrderData?.Type === "Profile" ? (
                   <td>
