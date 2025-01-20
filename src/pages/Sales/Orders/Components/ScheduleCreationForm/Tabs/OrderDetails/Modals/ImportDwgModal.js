@@ -516,32 +516,64 @@ function ImportDwgModal(props) {
 		handleChange,
 	} = props;
 
-	const PostOrderDwgData = async (e) => {
-		e.preventDefault();
-		console.log("PostOrderDwgData");
-		let dwgfiles = [];
-		dwgfiles = e.target.elements.impDwgFiles;
-		// alert(dwgfiles.files.length);
-		// alert(dwgfiles.files[0].name);
-		// alert(e.target.dblCuttingRate.value);
-		// alert(e.target.dblPierceRate.value);
-		imprtDwgObj = {
-			strmtrlcode: strmtrlcode,
-			stroperation: stroperation,
-			strsource: strsource,
-			strtolerance: strtolerance,
-			strinsp: strinsp,
-			strpkng: strpkng,
-			quantity: quantity,
-			dblCuttingRate: e.target.dblCuttingRate.value,
-			dblPierceRate: e.target.dblPierceRate.value,
-			dgfiles: dwgfiles,
-		};
-		setImprtDwgObj(imprtDwgObj);
-		PostOrderDetails(2, imprtDwgObj);
-		setImportDwgmdlShow(false);
-	};
+	// const PostOrderDwgData = async (e) => {
+	// 	e.preventDefault();
+	// 	console.log("PostOrderDwgData");
+	// 	let dwgfiles = [];
+	// 	dwgfiles = e.target.elements.impDwgFiles;
+	// 	// alert(dwgfiles.files.length);
+	// 	// alert(dwgfiles.files[0].name);
+	// 	// alert(e.target.dblCuttingRate.value);
+	// 	// alert(e.target.dblPierceRate.value);
+	// 	imprtDwgObj = {
+	// 		strmtrlcode: strmtrlcode,
+	// 		stroperation: stroperation,
+	// 		strsource: strsource,
+	// 		strtolerance: strtolerance,
+	// 		strinsp: strinsp,
+	// 		strpkng: strpkng,
+	// 		quantity: quantity,
+	// 		dblCuttingRate: e.target.dblCuttingRate.value,
+	// 		dblPierceRate: e.target.dblPierceRate.value,
+	// 		dgfiles: dwgfiles,
+	// 	};
+	// 	setImprtDwgObj(imprtDwgObj);
+	// 	PostOrderDetails(2, imprtDwgObj);
+	// 	setImportDwgmdlShow(false);
+	// };
 
+	//20012025
+	const PostOrderDwgData = async (e) => {
+    e.preventDefault();
+    console.log("PostOrderDwgData");
+    let dwgfiles = [];
+    dwgfiles = e.target.elements.impDwgFiles;
+    let strInsplvl = e.target.elements.strinspLvl.value;
+    let strPknglvl = e.target.elements.strpkngLvl.value;
+
+    console.log("strInsplvl", strInsplvl);
+    console.log("strPknglvl", strPknglvl);
+
+    let imprtdwgobjtemp = {
+      ...imprtDwgObj,
+      strmtrlcode: strmtrlcode,
+      stroperation: e.target.elements.stroperation.value,
+      strsource: e.target.elements.strsource.value,
+      strtolerance: e.target.elements.strtolerance.value,
+      strinsp: e.target.elements.strinspLvl.value,
+      strpkng: e.target.elements.strpkngLvl.value,
+      quantity: quantity,
+      dblCuttingRate: e.target.dblCuttingRate.value,
+      dblPierceRate: e.target.dblPierceRate.value,
+      dgfiles: dwgfiles,
+    };
+
+    console.log("imprtdwgobjtemp", imprtdwgobjtemp);
+
+    setImprtDwgObj(imprtdwgobjtemp);
+    PostOrderDetails(2, imprtdwgobjtemp);
+    setImportDwgmdlShow(false);
+  };
 	return (
 		<div
 			className="row mt-1"

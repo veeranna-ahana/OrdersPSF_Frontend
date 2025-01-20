@@ -66,8 +66,14 @@ export default function OrderDetails(props) {
     selectedRowItem,
     Dwglist,
     handleJWMR,
-    handleRowSelection,
-    handleMultipleRowSelection,
+    handleRowClick,
+    handleCheckboxChange,
+    selectedRow,
+    setSelectedRow,
+    selectedRows,
+    setSelectedRows,
+    setSelectedRowItems,
+    selectedRowItems,
   } = props;
 
   console.log("BomData", BomData);
@@ -1192,8 +1198,22 @@ export default function OrderDetails(props) {
     }
   };
   let [selectedDwg, setSelectedDwg] = useState("");
-
+  let [dwgopen, setDwgOpen] = useState(false);
   const funcEditDXF = async () => {
+    if (dwgopen) {
+      setDwgOpen(false);
+      return alert("Selected DXF File is kept Open below");
+    }
+    if (selectedDwg !== "" || selectedDwg != null) {
+      console.log(selectedDwg);
+      let srcpath = `\\Wo\\` + OrderNo + "\\DXF";
+      postRequest(endpoints.getOrdDxf, { selectedDwg, srcpath }, (respfile) => {
+        filetoService(window.respfile);
+        setDwgOpen(true);
+      });
+    }
+    // }
+    if (!window.dxffile) return alert("No DXF file selected");
     if (selectedDwg === window.dxffile.name) {
       return alert("Selected DXF File is kept Open below");
     }
@@ -1451,21 +1471,152 @@ export default function OrderDetails(props) {
         setisLoading(false);
         return;
       }
-    } else if (flag === 2) {
+    } 
+    // else if (flag === 2) {
+    //   console.log("Cutting : ", imprtDwgObj.dblCuttingRate);
+    //   console.log("Piercing : ", imprtDwgObj.dblPierceRate);
+    //   console.log("FileName 1 : " + imprtDwgObj.dgfiles.files[0].name);
+    //   console.log("flag : ", flag);
+    //   // if (props.OrderData?.Order_Status === "Recorded") {
+    //   //   toast.warning("Cannot import after the Order is recorded");
+    //   // } else {
+    //   //   handleImportDwgmdl();
+    //   // }
+
+    //   //let imprtDwgData = [];
+    //   let impDwgFileData = [];
+    //   let dwgnamefiles = imprtDwgObj.dgfiles.files;
+
+    //   await postRequest(
+    //     endpoints.getmtrldetsbymtrlcode,
+    //     { MtrlCode: strmtrlcode },
+    //     async (mtrldata1) => {
+    //       if (mtrldata1.length > 0) {
+    //         console.log("MtrlData : ", mtrldata1);
+    //         setThickness(mtrldata1[0]["Thickness"]);
+    //         setGradeID(mtrldata1[0]["MtrlGradeID"]);
+    //         setMaterial(mtrldata1[0]["Mtrl_Type"]);
+    //         setGrade(mtrldata1[0]["Grade"]);
+    //         setSpecificWt(mtrldata1[0]["Specific_Wt"]);
+
+    //         let thck = mtrldata1[0]["Thickness"];
+    //         let spwt = mtrldata1[0]["Specific_Wt"];
+    //       }
+    //     }
+    //   );
+
+    //   for (let i = 0; i < dwgnamefiles.length; i++) {
+    //     console.log("FileName : " + dwgnamefiles[i].name);
+    //   }
+    //   let destPath = ``;
+    //   destPath = `\\Wo\\` + OrderNo + "\\DXF\\";
+
+    //   await dxfupload(dwgnamefiles, destPath, (res) => {
+    //     console.log(res);
+    //   });
+    //   //  postRequest(endpoints.dxfupload, { files: dwgnamefiles }, (res) => {
+    //   //   console.log(res);
+    //   //  });
+
+    //   for (let i = 0; i < dwgnamefiles.length; i++) {
+    //     await locCalc(dwgnamefiles[i], material, grade, thickness, (output) => {
+    //       impDwgFileData = [
+    //         ...impDwgFileData,
+    //         {
+    //           files: dwgnamefiles[i],
+    //           lengthOfCut: output.lengthOfCut,
+    //           noOfPierces: output.noOfPierces,
+    //           file: dwgnamefiles[i].name,
+    //           jwcost:
+    //             output.lengthOfCut * imprtDwgObj.dblCuttingRate +
+    //             output.noOfPierces * imprtDwgObj.dblPierceRate,
+    //           mtrlcost: 0,
+    //           unitPrice:
+    //             output.lengthOfCut * imprtDwgObj.dblCuttingRate +
+    //             output.noOfPierces * imprtDwgObj.dblPierceRate,
+    //           total:
+    //             (output.lengthOfCut * imprtDwgObj.dblCuttingRate +
+    //               output.noOfPierces * imprtDwgObj.dblPierceRate) *
+    //             imprtDwgObj.quantity,
+    //         },
+    //       ];
+    //     });
+
+    //     // dxfupload(dwgnamefiles[i], destPath, (res) => {
+    //     //   console.log(res);
+    //     // });
+    //     //  postRequest(endpoints.dxfupload, { files: dwgnamefiles }, (res) => {
+    //     //   console.log(res);
+    //     //  });
+    //     window.dxffiles = dwgnamefiles[i];
+    //     {
+    //       console.log("vvv123", dwgnamefiles[i].name);
+    //     }
+    //     await postRequest(
+    //       endpoints.dxfCopy,
+    //       { Dwg: dwgnamefiles[i].name, destPath: destPath },
+    //       (res) => {
+    //         console.log(res);
+    //       }
+    //     );
+    //     //        copydxf(dwgnamefiles, destPath, (res) => { });
+    //   }
+    //   console.log("impDwgFileData", impDwgFileData);
+    //   requestData = {
+    //     flag: flag,
+    //     imprtDwgData: {
+    //       OrderNo: OrderNo,
+    //       newOrderSrl: newOrderSrl,
+    //       custcode: Cust_Code,
+    //       dwg: imprtDwgObj.Dwg,
+    //       Qty_Ordered: imprtDwgObj.quantity,
+    //       JwCost: imprtDwgObj.jwRate,
+    //       mtrlcost: imprtDwgObj.materialRate,
+    //       strmtrlcode: imprtDwgObj.strmtrlcode,
+    //       material: material,
+    //       mtrl: gradeid,
+    //       Delivery_Date: Delivery_Date,
+    //       Operation: Operation,
+    //       Thickness: thickness,
+    //       NewSrlFormData: NewSrlFormData,
+    //       tolerance: strtolerance,
+    //       insplevel: imprtDwgObj.InspLvl, // .insplevel,
+    //       packinglevel: imprtDwgObj.PkngLvl, // .packinglevel,
+    //       impDwgFileData: impDwgFileData,
+    //     },
+    //   };
+    //   //  console.log("requestData", requestData);
+    //   //   OrderNo: OrderNo,
+    //   //   newOrderSrl: newOrderSrl,
+    //   //   custcode: Cust_Code,
+    //   //   files: imprtDwgObj.files,
+    //   //   DwgName: dwgnamefiles[i].name,
+    //   //   dwg: imprtDwgObj.Dwg,
+    //   //   Qty_Ordered: imprtDwgObj.quantity,
+    //   //   JwCost: imprtDwgObj.jwRate,
+    //   //   mtrlcost: imprtDwgObj.materialRate,
+    //   //   strmtrlcode: imprtDwgObj.strmtrlcode,
+    //   //   material: imprtDwgObj.material,
+    //   //   Operation: Operation,
+    //   //   NewSrlFormData: NewSrlFormData,
+    //   //   tolerance: strtolerance,
+    //   //   insplevel: imprtDwgObj.insplevel,
+    //   //   packinglevel: imprtDwgObj.packinglevel,
+    //   //   LOC: lengthOfCut,
+    //   //   Holes: noOfPierces,
+    //   // };
+    // } 
+    //20012025 
+else if (flag === 2) {
       console.log("Cutting : ", imprtDwgObj.dblCuttingRate);
       console.log("Piercing : ", imprtDwgObj.dblPierceRate);
       console.log("FileName 1 : " + imprtDwgObj.dgfiles.files[0].name);
       console.log("flag : ", flag);
-      // if (props.OrderData?.Order_Status === "Recorded") {
-      //   toast.warning("Cannot import after the Order is recorded");
-      // } else {
-      //   handleImportDwgmdl();
-      // }
-
-      //let imprtDwgData = [];
+      console.log("imprtDwgObj : ", imprtDwgObj);
+ 
       let impDwgFileData = [];
       let dwgnamefiles = imprtDwgObj.dgfiles.files;
-
+ 
       await postRequest(
         endpoints.getmtrldetsbymtrlcode,
         { MtrlCode: strmtrlcode },
@@ -1477,26 +1628,23 @@ export default function OrderDetails(props) {
             setMaterial(mtrldata1[0]["Mtrl_Type"]);
             setGrade(mtrldata1[0]["Grade"]);
             setSpecificWt(mtrldata1[0]["Specific_Wt"]);
-
+ 
             let thck = mtrldata1[0]["Thickness"];
             let spwt = mtrldata1[0]["Specific_Wt"];
           }
         }
       );
-
+ 
       for (let i = 0; i < dwgnamefiles.length; i++) {
         console.log("FileName : " + dwgnamefiles[i].name);
       }
       let destPath = ``;
       destPath = `\\Wo\\` + OrderNo + "\\DXF\\";
-
+ 
       await dxfupload(dwgnamefiles, destPath, (res) => {
         console.log(res);
       });
-      //  postRequest(endpoints.dxfupload, { files: dwgnamefiles }, (res) => {
-      //   console.log(res);
-      //  });
-
+   
       for (let i = 0; i < dwgnamefiles.length; i++) {
         await locCalc(dwgnamefiles[i], material, grade, thickness, (output) => {
           impDwgFileData = [
@@ -1520,13 +1668,7 @@ export default function OrderDetails(props) {
             },
           ];
         });
-
-        // dxfupload(dwgnamefiles[i], destPath, (res) => {
-        //   console.log(res);
-        // });
-        //  postRequest(endpoints.dxfupload, { files: dwgnamefiles }, (res) => {
-        //   console.log(res);
-        //  });
+ 
         window.dxffiles = dwgnamefiles[i];
         {
           console.log("vvv123", dwgnamefiles[i].name);
@@ -1555,36 +1697,21 @@ export default function OrderDetails(props) {
           material: material,
           mtrl: gradeid,
           Delivery_Date: Delivery_Date,
-          Operation: Operation,
+        //  Operation: Operation,
+          Operation: imprtDwgObj.stroperation,
           Thickness: thickness,
           NewSrlFormData: NewSrlFormData,
-          tolerance: strtolerance,
+          tolerance: imprtDwgObj.strtolerance,
           insplevel: imprtDwgObj.InspLvl, // .insplevel,
           packinglevel: imprtDwgObj.PkngLvl, // .packinglevel,
           impDwgFileData: impDwgFileData,
         },
       };
-      //  console.log("requestData", requestData);
-      //   OrderNo: OrderNo,
-      //   newOrderSrl: newOrderSrl,
-      //   custcode: Cust_Code,
-      //   files: imprtDwgObj.files,
-      //   DwgName: dwgnamefiles[i].name,
-      //   dwg: imprtDwgObj.Dwg,
-      //   Qty_Ordered: imprtDwgObj.quantity,
-      //   JwCost: imprtDwgObj.jwRate,
-      //   mtrlcost: imprtDwgObj.materialRate,
-      //   strmtrlcode: imprtDwgObj.strmtrlcode,
-      //   material: imprtDwgObj.material,
-      //   Operation: Operation,
-      //   NewSrlFormData: NewSrlFormData,
-      //   tolerance: strtolerance,
-      //   insplevel: imprtDwgObj.insplevel,
-      //   packinglevel: imprtDwgObj.packinglevel,
-      //   LOC: lengthOfCut,
-      //   Holes: noOfPierces,
-      // };
-    } else if (flag === 3) {
+   
+    }
+ 
+    
+    else if (flag === 3) {
       // setHasBOM(1);
       // setisLoading(true);
       requestData = {
@@ -2010,8 +2137,14 @@ export default function OrderDetails(props) {
               ordrDetailsChange={ordrDetailsChange}
               setordrDetailsChange={setordrDetailsChange}
               handleJWMR={handleJWMR}
-              handleRowSelection={handleRowSelection}
-              handleMultipleRowSelection={handleMultipleRowSelection}
+              handleRowClick={handleRowClick}
+              handleCheckboxChange={handleCheckboxChange}
+              selectedRow={selectedRow}
+              setSelectedRow={setSelectedRow}
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
+              setSelectedRowItems={setSelectedRowItems}
+              selectedRowItems={selectedRowItems}
             />
           </div>
           <div className="col-md-6">
