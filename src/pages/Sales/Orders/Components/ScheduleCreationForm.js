@@ -201,8 +201,17 @@ export default function ScheduleCreationForm(props) {
         //Console.log(mtrdata);
         setMtrldata(mtrdata);
       });
+      // getRequest(endpoints.getProcessLists, (pdata) => {
+      //   setProcdata(pdata);
+      // });
+      //20012025
       getRequest(endpoints.getProcessLists, (pdata) => {
-        setProcdata(pdata);
+        let filteredprocess = pdata.filter(
+          // eslint-disable-next-line no-undef
+          (p) => p["type"] === Lower(ordertype)
+        );
+        // setProcdata(pdata);
+        setProcdata(filteredprocess);
       });
 
       getRequest(endpoints.getToleranceTypes, (ttdata) => {

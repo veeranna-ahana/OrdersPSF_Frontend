@@ -162,9 +162,9 @@ function AddNewSrlModal(props) {
                         name="newSrlMtrlSrc"
                         onChange={selectMtrlSrc}
                       >
-                        {/* <option value="" disabled selected>
+                        <option value="" disabled selected>
                           ** Select **
-                        </option> */}
+                        </option>
                         <option value={"Customer"}>Customer</option>
                         <option value={"Magod"}>Magod</option>
                       </select>
@@ -209,9 +209,9 @@ function AddNewSrlModal(props) {
                         name="newSrlOperation"
                         onChange={selectProc}
                       >
-                        {/* <option value="" disabled selected>
+                        <option value="" disabled selected>
                           ** Select **
-                        </option> */}
+                        </option>
                         {/* {procdata.map((proc) => {
 													// Check if "Service" column has non-zero values
 													if (props.OrderData?.Type === "Service") {
@@ -451,9 +451,9 @@ function AddNewSrlModal(props) {
                         name="newSrlInspLvl"
                         onChange={selectInsp}
                       >
-                        {/* <option value="" disabled selected>
+                        <option value="" disabled selected>
                           ** Select **
-                        </option> */}
+                        </option>
                         {inspdata.map((insplvl) => {
                           return (
                             <option value={insplvl["InspLevel"]}>
@@ -477,16 +477,12 @@ function AddNewSrlModal(props) {
                         name="newSrlPkngLvl"
                         onChange={selectPack}
                       >
-                        {/* <option value="" disabled selected>
+                        <option value="" disabled selected>
                           ** Select **
-                        </option> */}
+                        </option>
                         {packdata.map((packlvl) => {
                           return (
-                            <option
-                              // value={packlvl["PkngLevel"]}
-                              key={packlvl["PkngLevel"]}
-                              value={packlvl["PkngLevel"]}
-                            >
+                            <option value={packlvl["PkngLevel"]}>
                               {packlvl["PkngLevel"]}
                             </option>
                           );
