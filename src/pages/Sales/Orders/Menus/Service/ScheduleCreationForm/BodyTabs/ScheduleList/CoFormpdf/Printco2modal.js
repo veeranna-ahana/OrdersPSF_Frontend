@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import {
   PDFDownloadLink,
   Page,
@@ -10,6 +10,8 @@ import {
 } from "@react-pdf/renderer";
 import Modal from "react-bootstrap/Modal";
 import COForm from "./COForm";
+import { apipoints } from "../../../../../../../../api/isoForms/pdf";
+import Axios  from "axios";
 
 export default function Printco2modal({
   openPrintModal,
@@ -17,6 +19,21 @@ export default function Printco2modal({
   formData,
 }) {
   const [fullscreen, setFullscreen] = useState(true);
+
+  const [PDFData, setPDFData] = useState({});
+
+  useEffect(() => {
+    Axios
+      .get(apipoints.getPDFData)
+      .then((response) => {
+        setPDFData(response.data[0]);
+      })
+      .catch((error) => {
+        console.error("Error fetching", error);
+      });
+  }, []);
+
+
   const handleClose = () => setOpenPrintModal(false);
 
   return (
@@ -32,7 +49,7 @@ export default function Printco2modal({
               height="600"
               filename="ParameterSheetCO2form.pdf"
             >
-              <COForm formData={formData} />
+              <COForm formData={formData} PDFData={PDFData} />
             </PDFViewer>
           </Fragment>
         </Modal.Body>
