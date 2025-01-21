@@ -427,7 +427,7 @@ function NewOrder(props) {
                     id="formPurchaseOrderNo"
                     className="input-field"
                     type="text"
-                    maxLength={99}
+                    maxLength={50}
                     onChange={POInputChange}
                     required
                     placeholder="Please ented PO No with DC No"
