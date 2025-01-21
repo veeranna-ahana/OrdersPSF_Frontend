@@ -1,7 +1,9 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { PDFViewer, StyleSheet, Image } from "@react-pdf/renderer";
 import SolidStatePdf from "./SolidStatePdf";
+import { apipoints } from "../../../../../../../../api/isoForms/pdf";
+import Axios  from "axios";
 
 export default function SolidStateModal({
   solidStateFormOpen,
@@ -9,6 +11,18 @@ export default function SolidStateModal({
   formData,
 }) {
   const [fullscreen, setFullscreen] = useState(true);
+  const [PDFData, setPDFData] = useState({});
+
+  useEffect(() => {
+    Axios
+      .get(apipoints.getPDFData)
+      .then((response) => {
+        setPDFData(response.data[0]);
+      })
+      .catch((error) => {
+        console.error("Error fetching", error);
+      });
+  }, []);
 
   const handleClose = () => {
     setSolidStateFormOpen(false);
@@ -31,7 +45,7 @@ export default function SolidStateModal({
               height="600"
               filename="ParameterSolidState.pdf"
             >
-              <SolidStatePdf formData={formData} />
+              <SolidStatePdf formData={formData} PDFData={PDFData}/>
             </PDFViewer>
           </Fragment>
         </Modal.Body>

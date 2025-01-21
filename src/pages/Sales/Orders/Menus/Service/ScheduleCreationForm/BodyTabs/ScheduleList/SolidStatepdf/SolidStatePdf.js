@@ -1,6 +1,6 @@
 import React, { startTransition, useEffect, useState } from "react";
 import axios from "axios";
-import magodlogo from "../../../../../../../../../ML-LOGO.png";
+import magodlogo from "../../../../../../../../../../src/ML-LOGO.png";
 import {
   Page,
   Document,
@@ -9,16 +9,6 @@ import {
   Text,
   Image,
 } from "@react-pdf/renderer";
-import {
-  borderBottom,
-  borderRight,
-  fontSize,
-  padding,
-  style,
-  textAlign,
-  width,
-} from "@mui/system";
-// import magodlogo from "../Logo/MagodLogo.png";
 
 const styles = StyleSheet.create({
   page: {
@@ -30,16 +20,15 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   tableContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     flexWrap: "wrap",
-    marginTop: "10px",
+    marginTop: "20px",
+    marginLeft: "10px",
+    border: 1,
+    height: "95px",
+    width: "570px",
   },
-  tableTitle: {
-    marginTop: "25px",
-    fontSize: 12,
-    fontFamily: "Helvetica-Bold",
-    marginBottom: "10px",
-  },
+
   row: {
     flexDirection: "row",
   },
@@ -54,49 +43,11 @@ const styles = StyleSheet.create({
     fontSize: "8px",
   },
   logo: {
-    width: "60px",
-    height: "60px",
-  },
-  HeadingText: {
-    textAlign: "center",
-    marginLeft: "160px",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  Heading: {
-    textAlign: "center",
-    flexDirection: "row",
-    width: "500px",
-    padding: "1px",
-  },
-  subdetails: {
-    width: "570",
-    border: 1,
+    width: "40px",
+    height: "50px",
     marginLeft: "10px",
-    height: "20px",
-    marginTop: "10px",
-    textAlign: "center",
   },
-  // subdetailsshipping: {
-  //     width: "60px",
-  //     borderRight: 1,
-  //     borderTop: 1,
-  //     borderBottom: 1,
-  //     height: "140px",
-  //     marginTop: "10px",
-  // },
-  subsection1data: {
-    marginLeft: "10px",
-    width: "100%",
-    textAlign: "left",
-    flexDirection: "row",
-    padding: "3px",
-  },
-  smalltable: {
-    width: "290px",
-    flexDirection: "row",
-    textAlign: "left",
-  },
+
   smalltable: {
     width: "570px",
     flexDirection: "row",
@@ -112,33 +63,7 @@ const styles = StyleSheet.create({
     borderBottom: 1,
     borderRight: 1,
   },
-  // sideheadingdata2: {
-  //     width: "60px",
-  //     borderBottom: 1,
-  //     borderRight: 1,
-  // },
 
-  // sideHeadData1: {
-  //     width: "100px",
-  //     borderBottom: 1,
-  //     borderRight: 1,
-  // },
-
-  // sideHead2: {
-  //     width: "100px",
-  //     borderBottom: 1,
-  //     borderRight: 1,
-  // },
-
-  // sideHeadData2: {
-  //     width: "233px",
-  //     borderBottom: 1,
-  //     borderRight: 1,
-  // },
-  flexi: {
-    flexDirection: "column",
-    flexWrap: "wrap",
-  },
   tableContainer1: {
     width: "142.5px",
   },
@@ -157,17 +82,11 @@ const styles = StyleSheet.create({
   },
   tableDisplay: {
     width: "570px",
+    borderLeft: 1,
+    marginLeft: "10px",
+    borderRight: 1,
+  },
 
-    borderLeft: 1,
-    marginLeft: "10px",
-    borderRight: 1,
-  },
-  tableDisplay2: {
-    width: "570px",
-    marginLeft: "10px",
-    borderRight: 1,
-    borderLeft: 1,
-  },
   comments: {
     marginLeft: "5px",
     marginTop: "5px",
@@ -181,13 +100,7 @@ const styles = StyleSheet.create({
     padding: "1px",
     borderBottom: 1,
   },
-  drawingname01: {
-    width: "47.5px",
-    textAlign: "center",
-    borderRight: 1,
-    padding: "1px",
-    // borderBottom: 1,
-  },
+
   beadDia: {
     width: "47.5px",
     borderRight: 1,
@@ -275,72 +188,6 @@ const styles = StyleSheet.create({
     height: "150px",
   },
 
-  tableDataView2: {
-    width: "570px",
-    borderBottom: 1,
-    borderRight: 1,
-    borderLeft: 1,
-    marginLeft: "10px",
-
-    height: "230px",
-  },
-  pagetableView: {
-    width: "570px",
-    borderBottom: 1,
-    borderRight: 1,
-    marginLeft: "10px",
-  },
-  pageitem: {
-    width: "150px",
-    paddingLeft: 5,
-    borderLeft: 1,
-  },
-  SignatureSection: {
-    width: "570px",
-    borderBottom: 1,
-    borderRight: 1,
-    marginLeft: "10px",
-  },
-
-  SignatureData: {
-    width: "400px",
-    paddingLeft: 5,
-    borderLeft: 1,
-    paddingBottom: "10px",
-    paddingTop: "10px",
-  },
-  SignatureData2: {
-    width: "170px",
-    paddingLeft: 5,
-    borderLeft: 1,
-    paddingBottom: "10px",
-    paddingTop: "10px",
-  },
-  SignatureData222: {
-    width: "400px",
-    paddingLeft: 5,
-    borderLeft: 1,
-    height: "80px",
-  },
-  SignatureData22: {
-    width: "170px",
-    paddingLeft: 5,
-    borderLeft: 1,
-    height: "80px",
-  },
-  bottomtext: {
-    width: "570px",
-    marginLeft: "10px",
-  },
-
-  secondBox: {
-    width: "570",
-    borderBottom: 1,
-    borderLeft: 1,
-    borderRight: 1,
-    marginLeft: "10px",
-    height: "20px",
-  },
   tableData01: {
     fontSize: "8px",
     fontFamily: "Helvetica-Bold",
@@ -381,9 +228,40 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     textAlign: "center",
   },
+
+  // *************
+
+  title1: {
+    width: "100%",
+    marginTop: "10px",
+    marginLeft: "80px",
+    fontSize: "12px",
+    fontWeight: "bolder",
+    textDecoration: "underline",
+    fontFamily: "Helvetica-Bold",
+    // alignSelf: "center",
+  },
+
+  title2: {
+    width: "100%",
+    marginLeft: "140px",
+    fontSize: "11px",
+    fontWeight: "bold",
+    // textDecoration: "underline",
+    fontFamily: "Helvetica-Bold",
+    // alignSelf: "center",
+  },
+
+  companyInfo: {
+    marginTop: "4px",
+    marginLeft: "18%",
+    width: "65%",
+    fontSize: "9px",
+    alignSelf: "center",
+  },
 });
 
-const SolidStatePdf = ({ formData }) => {
+const SolidStatePdf = ({ formData, PDFData }) => {
   const numCopies = 3; // Number of copies you want
 
   const copiesData = [{ title: "Original For Buyer" }];
@@ -391,64 +269,43 @@ const SolidStatePdf = ({ formData }) => {
   const renderContent = () => {
     return (
       <Page size="A4" style={styles.page}>
-        <View style={styles.row}>
-          <View style={styles.column}>
-            <View style={styles.tableContainer}>
-              <View>
-                <Image src={magodlogo} style={styles.logo} />
-              </View>
-              <View>
-                <Text
-                  style={[
-                    styles.tableTitle,
-                    {
-                      fontSize: "15px",
-                      marginLeft: "110px",
-                      textDecoration: "underline",
-                    },
-                  ]}
-                >
-                  Magod Laser Machining Pvt Ltd
+        <View style={styles.tableContainer}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image src={magodlogo} style={styles.logo} />
+
+            <View>
+              <View style={{ justifyContent: "center" }}>
+                <Text style={[styles.title1, { textDecoration: "underline" }]}>
+                  Laser Welding Job Parameter Sheet - SolidState Laser
                 </Text>
               </View>
-              {/* <View style={styles.row}>
-                <Text
-                  style={[
-                    styles.globalfontwithoutbold,
-                    { marginLeft: "110px", textDecoration: "underline" },
-                  ]}
-                >
-                  Returnable Material Receipt Voucher
+
+              <View style={{ justifyContent: "center" }}>
+                <Text style={styles.title2}>{PDFData.RegisteredName}</Text>
+              </View>
+              <View style={{ justifyContent: "center" }}>
+                <Text style={{ ...styles.companyInfo, marginLeft: "130px" }}>
+                  GSTIN: {PDFData.GST_No}, CIN: {PDFData.CIN_No}
                 </Text>
-              </View> */}
+              </View>
+
+              <View style={{ justifyContent: "center" }}>
+                <Text style={{ ...styles.companyInfo, marginLeft: "90px" }}>
+                  {PDFData.RegistredOfficeAddress}
+                </Text>
+              </View>
+
+              <View style={{ justifyContent: "center" }}>
+                <Text style={{ ...styles.companyInfo, marginLeft: "50px" }}>
+                  {PDFData.PhonePrimary} {PDFData.PhoneSecondary}
+                  {PDFData.Email}
+                  {PDFData.URL}
+                </Text>
+              </View>
             </View>
           </View>
         </View>
-
         <View style={styles.tableContainerMain}>
-          <View style={styles.row}>
-            <View style={styles.column}>
-              <View style={styles.subdetails}>
-                <View style={styles.section1}>
-                  <View style={styles.column}>
-                    <Text
-                      style={[
-                        styles.globalfontwithbold,
-                        { marginLeft: "10px", padding: 3 },
-                      ]}
-                    >
-                      LASER WELDING JOB PARAMETER SHEET-SOLIDSTATE LASER
-                    </Text>
-                  </View>
-                </View>
-              </View>
-
-              {/* <View style={styles.secondBox}>
-                LASER WELDING JOB PARAMETER SHEET-SOLIDSTATE LASER
-              </View> */}
-            </View>
-          </View>
-
           <View style={styles.row}>
             <View style={styles.column}>
               <View style={styles.tableViewMain}>
@@ -517,66 +374,6 @@ const SolidStatePdf = ({ formData }) => {
 
                   <View style={styles.tableContainer1}>
                     <View style={styles.column}>
-                      {/* <View style={styles.smalltable}>
-                        <View style={styles.row}>
-                          <View style={styles.row}>
-                            <View style={styles.sideheading}>
-                              <Text
-                                style={[
-                                  styles.globalfontwithbold,
-                                  { paddingLeft: 5 },
-                                ]}
-                              >
-                                Material 1
-                              </Text>
-                            </View>
-                          </View>
-
-                          <View style={styles.row}>
-                            <View style={styles.sideheadingdata}>
-                              <Text
-                                style={[
-                                  styles.globalfontwithoutbold,
-                                  { paddingLeft: 5 },
-                                ]}
-                              >
-                                {" "}
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View> */}
-
-                      {/* <View style={styles.smalltable}>
-                        <View style={styles.row}>
-                          <View style={styles.row}>
-                            <View style={styles.sideheading}>
-                              <Text
-                                style={[
-                                  styles.globalfontwithbold,
-                                  { paddingLeft: 5 },
-                                ]}
-                              >
-                                Material 2
-                              </Text>
-                            </View>
-                          </View>
-
-                          <View style={styles.row}>
-                            <View style={styles.sideheadingdata}>
-                              <Text
-                                style={[
-                                  styles.globalfontwithoutbold,
-                                  { paddingLeft: 5 },
-                                ]}
-                              >
-                                {""}
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View> */}
-
                       <View style={styles.smalltable}>
                         <View style={styles.row}>
                           <View style={styles.row}>
@@ -640,66 +437,6 @@ const SolidStatePdf = ({ formData }) => {
                   </View>
 
                   <View style={styles.tableContainer1}>
-                    {/* <View style={styles.smalltable}>
-                      <View style={styles.row}>
-                        <View style={styles.row}>
-                          <View style={styles.sideheading}>
-                            <Text
-                              style={[
-                                styles.globalfontwithbold,
-                                { paddingLeft: 5 },
-                              ]}
-                            >
-                              Thk1
-                            </Text>
-                          </View>
-                        </View>
-
-                        <View style={styles.row}>
-                          <View style={styles.sideheadingdata}>
-                            <Text
-                              style={[
-                                styles.globalfontwithoutbold,
-                                { paddingLeft: 5 },
-                              ]}
-                            >
-                              Sales
-                            </Text>
-                          </View>
-                        </View>
-                      </View>
-                    </View> */}
-
-                    {/* <View style={styles.smalltable}>
-                      <View style={styles.row}>
-                        <View style={styles.row}>
-                          <View style={styles.sideheading}>
-                            <Text
-                              style={[
-                                styles.globalfontwithbold,
-                                { paddingLeft: 5 },
-                              ]}
-                            >
-                              Thk2
-                            </Text>
-                          </View>
-                        </View>
-
-                        <View style={styles.row}>
-                          <View style={styles.sideheadingdata}>
-                            <Text
-                              style={[
-                                styles.globalfontwithoutbold,
-                                { paddingLeft: 5 },
-                              ]}
-                            >
-                              {" "}
-                            </Text>
-                          </View>
-                        </View>
-                      </View>
-                    </View> */}
-
                     <View style={styles.smalltable}>
                       <View style={styles.row}>
                         <View style={styles.row}>
@@ -847,7 +584,6 @@ const SolidStatePdf = ({ formData }) => {
           <View>
             {formData.parametersTableData.map((rowData, index) => (
               <React.Fragment key={index}>
-                {/* Table Heading */}
                 <View style={styles.tableDisplay}>
                   <View style={styles.row}>
                     <View style={styles.drawingname}>
