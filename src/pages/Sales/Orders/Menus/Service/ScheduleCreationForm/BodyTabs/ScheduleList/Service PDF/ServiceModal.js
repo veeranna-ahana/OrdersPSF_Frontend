@@ -24,6 +24,9 @@ export default function ServiceModal({
 }) {
 	// console.log("in Print Modal",selectedWeek)
 
+	console.log('formdata', formdata);
+	
+
 	const [fullscreen, setFullscreen] = useState(true);
 
 	return (

@@ -137,6 +137,9 @@ function OrdrDtls(props) {
   };
 
   // console.log("setQuantity", quantity);
+  console.log("ordrDetailsChange----", ordrDetailsChange);
+  console.log("ordrDetailsChange.DwgName", ordrDetailsChange.DwgName);
+
   return (
     <div>
       <AddNewSrlModal
@@ -415,7 +418,7 @@ function OrdrDtls(props) {
                   value={ordrDetailsChange.quantity}
                   required
                   disabled={
-                    props.OrderData?.Order_Type === "Completed" &&
+                    props.OrderData?.Order_Type === "Complete" &&
                     props.OrderData?.Order_Status === "Recorded"
                   }
                 />
@@ -461,7 +464,7 @@ function OrdrDtls(props) {
                     // OrderData?.Order_Status === "Recorded"
                     (props.OrderData?.Order_Type === "Scheduled" &&
                       props.OrderData?.Order_Status === "Recorded") ||
-                    (props.OrderData?.Order_Type === "Completed" &&
+                    (props.OrderData?.Order_Type === "Complete" &&
                       props.OrderData?.Order_Status === "Recorded")
                   }
                   // value={LastSlctedRow?.JWCost || " "}
@@ -502,7 +505,7 @@ function OrdrDtls(props) {
                     // OrderData?.Order_Status === "Recorded"
                     (props.OrderData?.Order_Type === "Scheduled" &&
                       props.OrderData?.Order_Status === "Recorded") ||
-                    (props.OrderData?.Order_Type === "Completed" &&
+                    (props.OrderData?.Order_Type === "Complete" &&
                       props.OrderData?.Order_Status === "Recorded")
                   }
                 />

@@ -273,8 +273,7 @@ function ServiceOpenSchedule() {
     setSpecialInstruction(e.target.value);
   };
 
-  console.log('setSpecialInstruction', SpclInstruction);
-  
+  console.log("setSpecialInstruction", SpclInstruction);
 
   useEffect(() => {
     setChangedEngineer(formdata[0]?.Dealing_Engineer);
@@ -284,7 +283,7 @@ function ServiceOpenSchedule() {
 
   //Onclick save Button
   const onClickSave = () => {
-    if (SpclInstruction.length >= 200) {
+    if (SpclInstruction?.length >= 200) {
       toast.error("Special instructions must be 200 characters or less", {
         position: toast.POSITION.TOP_CENTER,
       });

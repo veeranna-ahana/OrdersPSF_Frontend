@@ -712,7 +712,7 @@ export default function OrderDetails(props) {
     //   setBulkChnangMdl(false);
     // }
 
-    const hasScheduled = selectedItems.some((item) => item.QtyScheduled !== 0);
+    const hasScheduled = selectedItems?.some((item) => item.QtyScheduled !== 0);
 
     if (hasScheduled) {
       toast.warning(
@@ -772,6 +772,8 @@ export default function OrderDetails(props) {
         if (deleteData.flag > 0) {
           toast.success("Serial Deleted sucessfully");
           fetchData();
+
+          window.location.reload();
         } else {
           toast.warning("Not Deleted Please Check Once");
         }
@@ -1471,7 +1473,7 @@ export default function OrderDetails(props) {
         setisLoading(false);
         return;
       }
-    } 
+    }
     // else if (flag === 2) {
     //   console.log("Cutting : ", imprtDwgObj.dblCuttingRate);
     //   console.log("Piercing : ", imprtDwgObj.dblPierceRate);
@@ -1605,18 +1607,18 @@ export default function OrderDetails(props) {
     //   //   LOC: lengthOfCut,
     //   //   Holes: noOfPierces,
     //   // };
-    // } 
-    //20012025 
-else if (flag === 2) {
+    // }
+    //20012025
+    else if (flag === 2) {
       console.log("Cutting : ", imprtDwgObj.dblCuttingRate);
       console.log("Piercing : ", imprtDwgObj.dblPierceRate);
       console.log("FileName 1 : " + imprtDwgObj.dgfiles.files[0].name);
       console.log("flag : ", flag);
       console.log("imprtDwgObj : ", imprtDwgObj);
- 
+
       let impDwgFileData = [];
       let dwgnamefiles = imprtDwgObj.dgfiles.files;
- 
+
       await postRequest(
         endpoints.getmtrldetsbymtrlcode,
         { MtrlCode: strmtrlcode },
@@ -1628,23 +1630,23 @@ else if (flag === 2) {
             setMaterial(mtrldata1[0]["Mtrl_Type"]);
             setGrade(mtrldata1[0]["Grade"]);
             setSpecificWt(mtrldata1[0]["Specific_Wt"]);
- 
+
             let thck = mtrldata1[0]["Thickness"];
             let spwt = mtrldata1[0]["Specific_Wt"];
           }
         }
       );
- 
+
       for (let i = 0; i < dwgnamefiles.length; i++) {
         console.log("FileName : " + dwgnamefiles[i].name);
       }
       let destPath = ``;
       destPath = `\\Wo\\` + OrderNo + "\\DXF\\";
- 
+
       await dxfupload(dwgnamefiles, destPath, (res) => {
         console.log(res);
       });
-   
+
       for (let i = 0; i < dwgnamefiles.length; i++) {
         await locCalc(dwgnamefiles[i], material, grade, thickness, (output) => {
           impDwgFileData = [
@@ -1668,7 +1670,7 @@ else if (flag === 2) {
             },
           ];
         });
- 
+
         window.dxffiles = dwgnamefiles[i];
         {
           console.log("vvv123", dwgnamefiles[i].name);
@@ -1697,7 +1699,7 @@ else if (flag === 2) {
           material: material,
           mtrl: gradeid,
           Delivery_Date: Delivery_Date,
-        //  Operation: Operation,
+          //  Operation: Operation,
           Operation: imprtDwgObj.stroperation,
           Thickness: thickness,
           NewSrlFormData: NewSrlFormData,
@@ -1707,11 +1709,7 @@ else if (flag === 2) {
           impDwgFileData: impDwgFileData,
         },
       };
-   
-    }
- 
-    
-    else if (flag === 3) {
+    } else if (flag === 3) {
       // setHasBOM(1);
       // setisLoading(true);
       requestData = {
@@ -2084,9 +2082,10 @@ else if (flag === 2) {
               className="button-style"
               onClick={handlebulkChnangMdl}
               disabled={
-                OrderData?.Order_Status === "Processing" ||
-                OrderData?.Order_Type === "Complete" ||
-                OrderData?.Order_Type === "Scheduled"
+                OrderData?.Order_Status === "Processing"
+                // ||
+                // OrderData?.Order_Type === "Complete" ||
+                // OrderData?.Order_Type === "Scheduled"
               }
             >
               Bulk Change
