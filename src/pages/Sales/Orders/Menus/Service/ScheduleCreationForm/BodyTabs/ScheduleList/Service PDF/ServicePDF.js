@@ -705,6 +705,9 @@ const ServicePDF = ({ formdata }) => {
   //   });
   // },[])
 
+  // console.log('formdata.Cust_name', formdata[0].Cust_name);
+  
+
   return (
     <Document>
       {Array.from({ length: totalPages }, (_, pageIndex) => (
@@ -931,7 +934,7 @@ const ServicePDF = ({ formdata }) => {
                               { fontSize: "11px" },
                             ]}
                           >
-                            Customer Name : {custname}
+                            Customer Name : {formdata[0].Cust_name}
                           </Text>
                         </View>
                         {/* <View style={styles.targerdatedata}>

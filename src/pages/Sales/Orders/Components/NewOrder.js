@@ -174,7 +174,7 @@ function NewOrder(props) {
     }
   };
 
-  const [selectedOrderType, setSelectedOrderType] = useState("Completed");
+  const [selectedOrderType, setSelectedOrderType] = useState("Complete");
 
   function handleOrderTypeChange(event) {
     // const selectedOrderType = event.target.value;
@@ -427,7 +427,7 @@ function NewOrder(props) {
                     id="formPurchaseOrderNo"
                     className="input-field"
                     type="text"
-                    maxLength={50}
+                    maxLength={100}
                     onChange={POInputChange}
                     required
                     placeholder="Please ented PO No with DC No"
@@ -831,6 +831,7 @@ function NewOrder(props) {
                     id="formSpecialInstructions"
                     className="input-field"
                     type="text"
+                    maxLength={100}
                     onChange={(e) => setFormSpecialInstructions(e.target.value)}
                     value={formSpecialInstructions}
                     style={{

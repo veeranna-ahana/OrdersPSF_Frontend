@@ -852,14 +852,17 @@ export default function ScheduleCreationForm(props) {
         // Optionally fetch data again to verify updates
         // fetchData();
       } else {
-        toast.warning("Order details update failed, check once", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        // toast.warning("Order details update failed, check once", {
+        //   position: toast.POSITION.TOP_CENTER,
+        // });
       }
     }
   };
 
   let updateOrdrData = async () => {
+    console.log("selectedSrl", selectedSrl);
+    console.log("ordrDetailsChange", ordrDetailsChange);
+
     postRequest(
       endpoints.singleChangeUpdate,
       {
@@ -889,6 +892,8 @@ export default function ScheduleCreationForm(props) {
         }
       }
     );
+
+    window.location.reload();
   };
   // let updateOrdrData = async () => {
   // 	// Prepare the data for the first update (singleChangeUpdate)
@@ -1289,7 +1294,7 @@ export default function ScheduleCreationForm(props) {
   // message for Register Button
   let message = "";
   switch (OrderData?.Order_Type) {
-    case "Completed":
+    case "Complete":
       message =
         "No changes for Quantity, PartName or Rate will be permitted once you register. Proceed?";
 
@@ -1425,7 +1430,7 @@ export default function ScheduleCreationForm(props) {
       const selectedOrderSrl = updatedSelectedItems.map(
         (item) => item.Order_Srl
       );
-      //console("selectedOrderSrl", selectedOrderSrl);
+      console("selectedOrderSrl---shravan", selectedOrderSrl);
       setDwgList(updatedSelectedItems);
       // setSelectedSrl(selectedOrderSrl);
       const lastSelectedRow =
@@ -1507,6 +1512,21 @@ export default function ScheduleCreationForm(props) {
     );
     setLastSlctedRow(rowData);
     setSelectedItems(rowData);
+
+    setordrDetailsChange((prevState) => ({
+      ...prevState,
+      DwgName: rowData?.DwgName || "",
+      MtrlSrc: rowData?.Mtrl_Source || "",
+      jwRate: rowData?.JWCost || "",
+      quantity: rowData?.Qty_Ordered || "",
+      materialRate: rowData?.MtrlCost || "",
+      unitPrice: rowData?.UnitPrice || "",
+      Operation: rowData?.Operation || "",
+      InspLvl: rowData?.InspLevel || "",
+      PkngLvl: rowData?.PackingLevel || "",
+      strmtrlcode: rowData?.Mtrl_Code || "",
+    }));
+
     if (props.Type === "Profile") {
       let srcpath = `\\Wo\\` + Orderno + "\\DXF\\";
 
@@ -1672,6 +1692,22 @@ export default function ScheduleCreationForm(props) {
       console.log("lastSelectedRow-new", lastSelectedRow);
       setLastSlctedRow(lastSelectedRow);
 
+      setordrDetailsChange((prevState) => ({
+        ...prevState,
+        DwgName: lastSelectedRow?.DwgName || "",
+        MtrlSrc: lastSelectedRow?.Mtrl_Source || "",
+        jwRate: lastSelectedRow?.JWCost || "",
+        quantity: lastSelectedRow?.Qty_Ordered || "",
+        materialRate: lastSelectedRow?.MtrlCost || "",
+        unitPrice: lastSelectedRow?.UnitPrice || "",
+        Operation: lastSelectedRow?.Operation || "",
+        InspLvl: lastSelectedRow?.InspLevel || "",
+        PkngLvl: lastSelectedRow?.PackingLevel || "",
+        strmtrlcode: lastSelectedRow?.Mtrl_Code || "",
+      }));
+
+      setSelectedSrl(selectedOrderSrl);
+
       if (props.Type === "Profile") {
         let srcpath = `\\Wo\\` + Orderno + "\\DXF\\";
 
@@ -1783,6 +1819,8 @@ export default function ScheduleCreationForm(props) {
       });
     }
   };
+
+  console.log("ordrDetailsChange-->>>", ordrDetailsChange);
 
   return (
     <>
