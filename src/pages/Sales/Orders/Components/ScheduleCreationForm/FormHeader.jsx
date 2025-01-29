@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Tab, Table, Tabs, Form } from "react-bootstrap";
 import axios from "axios";
-// import { shell } from "electron";
-// const { openFileExplorer } = window.electron; // Ensure you have this exposed in your Electron setup
 
 export default function FormHeader(props) {
   let navigate = useNavigate();
@@ -74,11 +72,11 @@ export default function FormHeader(props) {
       })
       .then((response) => {
         // Handle success
-        console.log("Folder opened successfully:", response.data);
+        // console.log("Folder opened successfully:", response.data);
       })
       .catch((error) => {
         // Handle error
-        console.error("Error opening path:", error);
+        // console.error("Error opening path:", error);
       });
   };
   // };
@@ -98,25 +96,6 @@ export default function FormHeader(props) {
     fileInput.click();
   };
 
-  // const handleClick = () => {
-  // 	const path = "C:\\Magod\\Jigani"; // Use double backslashes in the path
-  // 	shell
-  // 		.openPath(path)
-  // 		.then(() => {
-  // 			console.log("Opened:", path);
-  // 		})
-  // 		.catch((error) => {
-  // 			console.error("Error opening path:", error);
-  // 		});
-  // };
-
-  // const handleClick = () => {
-  // 	// Define the path to open
-  // 	// const path = "C:\\Magod\\Jigani";
-  // 	// Call the Electron function to open the file explorer
-  // 	// openFileExplorer(path);
-  // 	window.location.href = "file:///C:/Magod"; // Replace with your folder path
-  // };
   return (
     <>
       <div className="col-md-12">

@@ -77,7 +77,7 @@ function NewOrder(props) {
 
       await postRequest(endpoints.getSalesExecLists, {}, (sdata) => {
         {
-          console.log(sdata);
+          // console.log(sdata);
         }
         setSalesExecdata(sdata);
       });
@@ -129,7 +129,7 @@ function NewOrder(props) {
 
   let selectCust = async (e) => {
     let cust;
-    console.log("custdata.length", custdata.length);
+    // console.log("custdata.length", custdata.length);
 
     for (let i = 0; i < custdata.length; i++) {
       if (custdata[i]["Cust_Code"] === e[0].Cust_Code) {
@@ -137,7 +137,7 @@ function NewOrder(props) {
         break;
       }
     }
-    console.log("cust", cust);
+    // console.log("cust", cust);
 
     setCustCode(cust.Cust_Code);
     setCustomerContact(
@@ -179,19 +179,19 @@ function NewOrder(props) {
   function handleOrderTypeChange(event) {
     // const selectedOrderType = event.target.value;
     // Do something with the selected order type
-    console.log("Selected order type:", event.target.value);
+    // console.log("Selected order type:", event.target.value);
     setSelectedOrderType(event.target.value);
     // You can perform any action here based on the selected value
   }
 
-  console.log("selectedOrderType", selectedOrderType);
+  // console.log("selectedOrderType", selectedOrderType);
 
   async function SaveOrder(e) {
     if (e) {
       e.preventDefault();
       // toast.error("Event", e);
     } else {
-      console.error("Event object is undefined in SaveOrder function.");
+      // console.error("Event object is undefined in SaveOrder function.");
       toast.error("Event object is undefined in SaveOrder function.", {
         autoClose: 1500,
       });
@@ -203,20 +203,20 @@ function NewOrder(props) {
     e.preventDefault();
     // Order_Type = "complete"
     // Type = "Service"
-    console.log("Type", e.target.elements?.formOrderType.value);
+    // console.log("Type", e.target.elements?.formOrderType.value);
     // let ordertype = selectedOrderType;
     let ordertype = props.Type;
     let type = selectedOrderType;
-    console.log("ordertype", ordertype);
+    // console.log("ordertype", ordertype);
     let purchaseorder = e.target.elements?.formPurchaseOrderNo.value;
 
     let qtnno = formquotationNo;
     let deldate = e.target.elements?.formDeliveryDate.value;
     let deliverydate = deldate;
-    console.log("deliverydate", deliverydate);
+    // console.log("deliverydate", deliverydate);
     let paymentterms = e.target.elements?.formPaymentTerms.value;
     let salesContact = e.target.elements?.formSalesContact.value;
-    console.log("asdfghjkl...", salesContact);
+    // console.log("asdfghjkl...", salesContact);
     //let customername = e.target.elements.CustomerName.value;
     // postRequest(endpoints.getCustomerDets, { CustomerName }, (data) => {
     //   setCustCode(data.Cust_code);
@@ -246,7 +246,7 @@ function NewOrder(props) {
     let GSTTaxState = e.target.elements?.formGSTTaxState.value;
     let Transportcharges = e.target.elements?.formTransportCharges.value;
 
-    console.log("MagodDelivery", MagodDelivery);
+    // console.log("MagodDelivery", MagodDelivery);
     if (!isChecked) {
       deliveryModeSelectRef?.current.reportValidity();
     }

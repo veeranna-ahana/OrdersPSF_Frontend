@@ -42,49 +42,22 @@ function OrdrTable(props) {
   }, [OrdrDetailsData]);
 
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
-  // const [selectedRow, setSelectedRow] = useState(null); // For single row selection
-  // const [selectedRows, setSelectedRows] = useState([]); // For multi-row selection
 
-  // // Handle single row selection (highlighting row)
-  // const handleRowClick = (rowId) => {
-  //   setSelectedRow(rowId === selectedRow ? null : rowId); // Toggle selection for single row
-  //   setSelectedRows([]); // Clear multi-row selection when a row is clicked for single selection
-  // };
-
-  // // Handle multi-row selection with checkboxes
-  // const handleCheckboxChange = (rowId) => {
-  //   setSelectedRows(
-  //     (prevSelectedRows) =>
-  //       prevSelectedRows.includes(rowId)
-  //         ? prevSelectedRows.filter((id) => id !== rowId) // Remove if already selected
-  //         : [...prevSelectedRows, rowId] // Add if not already selected
-  //   );
-  //   setSelectedRow(null); // Clear single row selection when using checkboxes
-  // };
-
-  // Get background color for the row
-  const getRowBackgroundColor = (OrdrDetailsItem) => {
-    if (selectedRow === OrdrDetailsItem.Order_Srl) {
-      return "#98a8f8"; // Color for single selection
-    }
-    return "transparent"; // Default background
+  const getRowBackgroundColor = (order) => {
+    if (order.Qty_Ordered === 0) return "lavender";
+    else if (order.QtyDelivered >= order.Qty_Ordered) return "lightgreen";
+    else if (order.QtyDelivered > 0 && order.QtyPacked >= order.Qty_Ordered)
+      return "orange";
+    else if (order.QtyPacked >= order.Qty_Ordered) return "lightgreen";
+    else if (order.QtyPacked > 0 && order.QtyProduced >= order.Qty_Ordered)
+      return "greenyellow";
+    else if (order.QtyProduced >= order.Qty_Ordered) return "yellow";
+    else if (order.QtyProduced > 0 && order.QtyScheduled >= order.Qty_Ordered)
+      return "greenyellow";
+    else if (order.QtyScheduled >= order.Qty_Ordered) return "lightyellow";
+    else if (order.QtyScheduled > 0) return "lightcoral";
+    else return "lightblue";
   };
-  // const getRowBackgroundColor = (order) => {
-  //   if (order.Qty_Ordered === 0) return "lavender";
-  //   else if (order.QtyDelivered >= order.Qty_Ordered) return "lightgreen";
-  //   else if (order.QtyDelivered > 0 && order.QtyPacked >= order.Qty_Ordered)
-  //     return "orange";
-  //   else if (order.QtyPacked >= order.Qty_Ordered) return "lightgreen";
-  //   else if (order.QtyPacked > 0 && order.QtyProduced >= order.Qty_Ordered)
-  //     return "greenyellow";
-  //   else if (order.QtyProduced >= order.Qty_Ordered) return "yellow";
-  //   else if (order.QtyProduced > 0 && order.QtyScheduled >= order.Qty_Ordered)
-  //     return "greenyellow";
-  //   else if (order.QtyScheduled >= order.Qty_Ordered) return "lightyellow";
-  //   else if (order.QtyScheduled > 0) return "lightcoral";
-  //   else return "lightblue";
-  // };
-
   // sorting function for table headings of the table
   const requestSort = (key) => {
     console.log("entering into the request sort");
@@ -170,8 +143,8 @@ function OrdrTable(props) {
               <tr
                 // key={i}
                 // onClick={() => selectItem(OrdrDetailsItem, false)}
-                // // onClick={() => selectItem(OrdrDetailsItem, imprtDwgObj)}
-                // // onClick={() => selectedRowItem(OrdrDetailsItem, imprtDwgObj)}
+                // onClick={() => selectItem(OrdrDetailsItem, imprtDwgObj)}
+                // onClick={() => selectedRowItem(OrdrDetailsItem, imprtDwgObj)}
                 // style={{
                 //   cursor: "pointer",
                 //   backgroundColor: selectedItems?.includes(OrdrDetailsItem)
@@ -182,61 +155,47 @@ function OrdrTable(props) {
                 // // className="order-details-row"
 
                 // data-srlstatus={OrdrDetailsItem.SrlStatus}
-                key={i}
-                onClick={() => handleRowClick(OrdrDetailsItem)}
+                // key={i}
+                // onClick={() => handleRowClick(OrdrDetailsItem)}
                 // style={{
                 //   cursor: "pointer",
-                //   backgroundColor: selectedRows.includes(
-                //     OrdrDetailsItem.Order_Srl
-                //   )
-                //     ? "#98a8f8" // Highlight row for multi-selection
-                //     : backgroundColor,
+                //   backgroundColor:
+                //     selectedRow &&
+                //     selectedRow.Order_Srl === OrdrDetailsItem.Order_Srl
+                //       ? "#98a8f8" // Highlight color for the selected row
+                //       : backgroundColor, // Default background color
                 //   whiteSpace: "nowrap",
                 // }}
+                // data-srlstatus={OrdrDetailsItem.SrlStatus}
+                key={i}
+                onClick={() => handleRowClick(OrdrDetailsItem)}
                 style={{
                   cursor: "pointer",
+
                   backgroundColor:
                     selectedRow &&
                     selectedRow.Order_Srl === OrdrDetailsItem.Order_Srl
-                      ? "#98a8f8" // Highlight color for the selected row
+                      ? "#98a8f8" // Set the background color to red for the selected row
                       : backgroundColor, // Default background color
                   whiteSpace: "nowrap",
                 }}
                 data-srlstatus={OrdrDetailsItem.SrlStatus}
               >
                 <td>
-                  {/* <Form.Check
-                    type="checkbox"
-                    id={`select-checkbox-${i}`}
-                    onChange={() => selectItem(OrdrDetailsItem, true)} // Trigger multi-row selection
-                    checked={selectedItems.includes(OrdrDetailsItem)}
-                  /> */}
-                  {/* <Form.Check
-                    type="checkbox"
-                    id={`select-checkbox-${i}`}
-                    onChange={() => selectItem(OrdrDetailsItem, true)}
-                    checked={selectedItems.some(
-                      (item) => item.Order_Srl === OrdrDetailsItem.Order_Srl
-                    )}
-                  /> */}
-                  {/* <Form.Check
-                    type="checkbox"
-                    id={`select-checkbox-${i}`}
-                    checked={selectedRows.includes(OrdrDetailsItem.Order_Srl)}
-                    onChange={() => handleCheckboxChange(OrdrDetailsItem)}
-                    onClick={(e) => e.stopPropagation()} // Prevent triggering row click
-                  /> */}
                   <Form.Check
                     type="checkbox"
                     id={`select-checkbox-${i}`}
                     checked={selectedRows.some(
                       (row) => row.Order_Srl === OrdrDetailsItem.Order_Srl
                     )}
-                    // checked={isSelected}
-                    onChange={() => handleCheckboxChange(OrdrDetailsItem)} // Pass the entire row data
+                    onChange={() => handleCheckboxChange(OrdrDetailsItem)} // Passed the entire row data
                     onClick={(e) => e.stopPropagation()} // Prevent triggering row click
                   />
                 </td>
+                {/* <td>
+                  <Form.Check type="checkbox" id={`select-checkbox-${i}`} />
+                </td> */}
+
                 <td>{OrdrDetailsItem.DwgName}</td>
                 {props.OrderData?.Type === "Profile" ? (
                   <td>
@@ -265,7 +224,10 @@ function OrdrTable(props) {
                       border: "none",
                     }}
                     value={OrdrDetailsItem.JWCost}
-                    onChange={(e) => handleJWMR(i, "JWCost", e.target.value)}
+                    // onChange={(e) => handleJWMR(i, "JWCost", e.target.value)}
+                    onChange={(e) => {
+                      handleJWMR(i, "JWCost", e.target.value, true); // Pass `true` for JRM
+                    }}
                   />
                 </td>
                 {/* <td>
@@ -280,7 +242,10 @@ function OrdrTable(props) {
                       border: "none",
                     }}
                     value={OrdrDetailsItem.MtrlCost}
-                    onChange={(e) => handleJWMR(i, "MtrlCost", e.target.value)}
+                    // onChange={(e) => handleJWMR(i, "MtrlCost", e.target.value)}
+                    onChange={(e) => {
+                      handleJWMR(i, "MtrlCost", e.target.value, true); // Pass `true` for JRM
+                    }}
                   />
                 </td>
                 <td>
@@ -300,9 +265,12 @@ function OrdrTable(props) {
                       border: "none",
                     }}
                     value={OrdrDetailsItem.Qty_Ordered}
-                    onChange={(e) =>
-                      handleJWMR(i, "Qty_Ordered", e.target.value)
-                    }
+                    // onChange={(e) =>
+                    //   handleJWMR(i, "Qty_Ordered", e.target.value)
+                    // }
+                    onChange={(e) => {
+                      handleJWMR(i, "Qty_Ordered", e.target.value, true); // Pass `true` for JRM
+                    }}
                   />
                 </td>
                 <td>

@@ -56,25 +56,10 @@ function AddNewSrlModal(props) {
     handleInputChange,
     handleMtrlCodeTypeaheadChangeeee,
     NewSrlFormData,
+    Operation,
+    setOperation,
   } = props;
-  console.log("NewSrlFormData....123 ", NewSrlFormData?.MtrlSrc);
-  //console.log(props.OrderData?.Order_Type);
 
-  // const [isLoading, setIsloading] = useState();
-
-  // const handleMtrlCodeTypeaheadChangeeee = (selectedOptions) => {
-  //   console.log("selectedOptions....", selectedOptions);
-  //   setSelectedItems(selectedOptions);
-  //   // if (selectedOptions.length > 0) {
-  //   //   setLastSlctedRow(selectedOptions[0]);
-  //   // }
-  //   const selectedValue =
-  //     selectedOptions.length > 0 ? selectedOptions[0]?.Mtrl_Code : " ";
-  //   console.log("selectedValue", selectedValue?.Mtrl_Code);
-  //   setStrMtrlCode(selectedValue);
-  // };
-
-  console.log("procdata", procdata);
   return (
     <div className="row mt-1">
       {isLoading && <LoadingPage />}
@@ -111,7 +96,8 @@ function AddNewSrlModal(props) {
                         className="in-field"
                         name="newSrlDwgname"
                         // value={DwgName}
-                        value={newSerial.DwgName}
+                        // value={newSerial.DwgName}
+                        value={newSerial.DwgName }
                         // onChange={handleDwgInputChange}
                         onChange={handleChange}
                         required
@@ -161,10 +147,16 @@ function AddNewSrlModal(props) {
                         id="strsource"
                         name="newSrlMtrlSrc"
                         onChange={selectMtrlSrc}
+                        defaultValue={"Customer"}
                       >
-                        <option value="" disabled selected>
+                        {/* <option
+                          value=""
+                          disabled
+                          selected
+                          defaultValue={"Customer"}
+                        >
                           ** Select **
-                        </option>
+                        </option> */}
                         <option value={"Customer"}>Customer</option>
                         <option value={"Magod"}>Magod</option>
                       </select>
@@ -207,7 +199,10 @@ function AddNewSrlModal(props) {
                         className="ip-select"
                         id="strprocess"
                         name="newSrlOperation"
+                        // defaultValue={procdata[0]?.Operation}
                         onChange={selectProc}
+                        // value={Operation || procdata[0]?.Operation || ""}
+                        // onChange={(e) => setOperation(e.target.value)}
                       >
                         <option value="" disabled selected>
                           ** Select **
@@ -353,6 +348,7 @@ function AddNewSrlModal(props) {
                       name="newSrlQty"
                       id="Qty"
                       value={quantity}
+                      defaultValue={1}
                       onChangeCallback={setQuantity}
                       required
                     />
@@ -451,12 +447,12 @@ function AddNewSrlModal(props) {
                         name="newSrlInspLvl"
                         onChange={selectInsp}
                       >
-                        <option value="" disabled selected>
+                        {/* <option value="" disabled selected>
                           ** Select **
-                        </option>
+                        </option> */}
                         {inspdata.map((insplvl) => {
                           return (
-                            <option value={insplvl["InspLevel"]}>
+                            <option value={insplvl["InspLevel"] || "Insp1"}>
                               {insplvl["InspLevel"]}
                             </option>
                           );
@@ -477,12 +473,12 @@ function AddNewSrlModal(props) {
                         name="newSrlPkngLvl"
                         onChange={selectPack}
                       >
-                        <option value="" disabled selected>
+                        {/* <option value="" disabled selected>
                           ** Select **
-                        </option>
+                        </option> */}
                         {packdata.map((packlvl) => {
                           return (
-                            <option value={packlvl["PkngLevel"]}>
+                            <option value={packlvl["PkngLevel"] || "Pkng1"}>
                               {packlvl["PkngLevel"]}
                             </option>
                           );
