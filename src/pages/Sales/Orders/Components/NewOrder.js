@@ -431,6 +431,7 @@ function NewOrder(props) {
                     onChange={POInputChange}
                     required
                     placeholder="Please ented PO No with DC No"
+                    autoComplete="off"
                   />
                 </div>
               </div>
@@ -710,6 +711,7 @@ function NewOrder(props) {
                     onChange={(e) => setCustomerContact(e.target.value)}
                     value={CustomerContact}
                     required
+                    autoComplete="off"
                   />
                 </div>
               </div>
