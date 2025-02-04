@@ -575,10 +575,14 @@ function ServiceOpenSchedule() {
   const [Performancedata, setPerformancedata] = useState([]);
   const [showPerformancedata, setShowPerformance] = useState(false);
   const onClickPerformance = () => {
-    postRequest(endpoints.onClickPerformance, { formdata }, (response) => {
+    
+    console.log('TaskMaterialData', TaskMaterialData);
+    
+
+    postRequest(endpoints.onClickPerformance, { formdata, TaskMaterialData }, (response) => {
       setPerformancedata(response);
       setShowPerformance(true);
-      //  console.log(response);
+       console.log(response);
     });
   };
 
@@ -986,6 +990,7 @@ function ServiceOpenSchedule() {
   };
 
   console.log("formdata[0]?.Order_No", formdata[0]?.Order_No);
+  
 
   const selectedMtrlDimenrow = (itm, id) => {
     setSelectedMtrlDimenId(id);
@@ -1515,10 +1520,15 @@ function ServiceOpenSchedule() {
                           (item) => item.NcTaskId === value.NcTaskId
                         );
 
+                        console.log('Performancedata inside table', Performancedata);
+                        console.log('performanceRow inside table', performanceRow);
+                        
+
                         // Define the default values
                         let machineTime = "Not Processed";
                         let hourRate = "Not Invoiced";
                         let targetHourRate = "Not Invoiced";
+                        let tgtRate = "Not Invoiced";
 
                         // If performanceRow exists, override the default values
                         if (performanceRow) {
@@ -1536,6 +1546,11 @@ function ServiceOpenSchedule() {
                             typeof performanceRow.TargetHourRate === "number"
                               ? performanceRow.TargetHourRate.toFixed(2)
                               : performanceRow.TargetHourRate;
+
+                          tgtRate =
+                              typeof performanceRow.TargetHourRate === "number"
+                                ? performanceRow.TgtRate
+                                : 'Not Invoiced';    
                         }
 
                         return (
@@ -1562,7 +1577,7 @@ function ServiceOpenSchedule() {
                               <>
                                 <td>{machineTime}</td>
                                 <td>{hourRate}</td>
-                                <td>{targetHourRate}</td>
+                                <td>{tgtRate}</td>
                               </>
                             )}
                           </tr>
