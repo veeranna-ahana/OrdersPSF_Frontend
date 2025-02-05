@@ -19,7 +19,8 @@ function ServiceOpenSchedule() {
   const location = useLocation(); // Access location object using useLocation hook
   const DwgNameList = location?.state?.DwgNameList || []; // Get DwgNameList from location state
   const Type = location?.state?.Type || []; //get types
-  const OrdrDetailsData = location?.state.OrdrDetailsData || [];
+  const OrdrDetailsData = location?.state?.OrdrDetailsData || [];
+  // const OrdrDetailsData = location?.state.OrdrDetailsData || [];
 
   // Standardize the case of the property name
   const scheduleId = DwgNameList[0]?.ScheduleId || DwgNameList[0]?.ScheduleID;
@@ -134,6 +135,8 @@ function ServiceOpenSchedule() {
         ScheduleId: scheduleId,
       },
       (response) => {
+        console.log("formdata In Api:", response);
+
         setFormdata(response);
         postRequest(
           endpoints.getAllPNAndInvRegisterbyOrderNo,
@@ -373,29 +376,79 @@ function ServiceOpenSchedule() {
   };
 
   //Onclick of Cancel
-  const onClickCancel = () => {
-    postRequest(endpoints.onClickCancel, { newState }, (response) => {
-      // console.log("response cancel is",response.message)
-      if (response.message === "Cannot Cancel Schedules Once Programmed") {
-        toast.error("Cannot Cancel Schedules Once Programmed", {
+  // const onClickCancel = () => {
+  //   postRequest(endpoints.onClickCancel, { newState }, (response) => {
+  //     // console.log("response cancel is",response.message)
+  //     if (response.message === "Cannot Cancel Schedules Once Programmed") {
+  //       toast.error("Cannot Cancel Schedules Once Programmed", {
+  //         position: toast.POSITION.TOP_CENTER,
+  //       });
+  //     } else {
+  //       toast.success("Schedules cancelled successfully", {
+  //         position: toast.POSITION.TOP_CENTER,
+  //       });
+  //       postRequest(
+  //         endpoints.getScheduleListgetFormDetails,
+  //         {
+  //           Cust_Code: DwgNameList[0]?.Cust_Code,
+  //           ScheduleId: DwgNameList[0]?.ScheduleId,
+  //         },
+  //         (response) => {
+  //           setFormdata(response);
+  //         }
+  //       );
+  //     }
+  //   });
+  // };
+
+  const onClickCancel = async () => {
+    console.log("Sending request to cancel schedule:", newState);
+
+    try {
+      const response = await postRequest(endpoints.onClickCancel, { newState });
+
+      console.log("Response received:", response);
+
+      if (
+        response?.message === "Cannot Cancel: Schedule is already programmed"
+      ) {
+        toast.error("Cannot Cancel: Schedule is already programmed", {
           position: toast.POSITION.TOP_CENTER,
         });
-      } else {
+      } else if (response?.message === "Schedules cancelled successfully") {
         toast.success("Schedules cancelled successfully", {
           position: toast.POSITION.TOP_CENTER,
         });
-        postRequest(
+
+        // Fetch updated schedule details
+        const formDataResponse = await postRequest(
           endpoints.getScheduleListgetFormDetails,
           {
             Cust_Code: DwgNameList[0]?.Cust_Code,
             ScheduleId: DwgNameList[0]?.ScheduleId,
-          },
-          (response) => {
-            setFormdata(response);
           }
         );
+
+        setFormdata(formDataResponse);
+      } else {
+        toast.error("Unexpected response from server.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
-    });
+    } catch (error) {
+      console.error("API Request Failed:", error);
+
+      // Handle 400 errors separately
+      if (error.message.includes("400")) {
+        toast.error("Cannot Cancel: Schedule is already programmed", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } else {
+        toast.error(`Error: ${error.message || "Request failed"}`, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    }
   };
 
   //Scheduled
@@ -522,10 +575,14 @@ function ServiceOpenSchedule() {
   const [Performancedata, setPerformancedata] = useState([]);
   const [showPerformancedata, setShowPerformance] = useState(false);
   const onClickPerformance = () => {
-    postRequest(endpoints.onClickPerformance, { formdata }, (response) => {
+    
+    console.log('TaskMaterialData', TaskMaterialData);
+    
+
+    postRequest(endpoints.onClickPerformance, { formdata, TaskMaterialData }, (response) => {
       setPerformancedata(response);
       setShowPerformance(true);
-      //  console.log(response);
+       console.log(response);
     });
   };
 
@@ -932,6 +989,9 @@ function ServiceOpenSchedule() {
     );
   };
 
+  console.log("formdata[0]?.Order_No", formdata[0]?.Order_No);
+  
+
   const selectedMtrlDimenrow = (itm, id) => {
     setSelectedMtrlDimenId(id);
     setMtrlLength(itm.Length);
@@ -1158,7 +1218,8 @@ function ServiceOpenSchedule() {
                 ? "/Orders/Fabrication/ScheduleCreationForm"
                 : null
             }
-            state={formdata[0]?.Order_No}
+            state={{ Order_No: formdata[0]?.Order_No }}
+            // state={formdata[0]?.Order_No}
           >
             <button className="button-style">Close</button>
           </Link>
@@ -1459,10 +1520,15 @@ function ServiceOpenSchedule() {
                           (item) => item.NcTaskId === value.NcTaskId
                         );
 
+                        console.log('Performancedata inside table', Performancedata);
+                        console.log('performanceRow inside table', performanceRow);
+                        
+
                         // Define the default values
                         let machineTime = "Not Processed";
                         let hourRate = "Not Invoiced";
                         let targetHourRate = "Not Invoiced";
+                        let tgtRate = "Not Invoiced";
 
                         // If performanceRow exists, override the default values
                         if (performanceRow) {
@@ -1480,6 +1546,11 @@ function ServiceOpenSchedule() {
                             typeof performanceRow.TargetHourRate === "number"
                               ? performanceRow.TargetHourRate.toFixed(2)
                               : performanceRow.TargetHourRate;
+
+                          tgtRate =
+                              typeof performanceRow.TargetHourRate === "number"
+                                ? performanceRow.TgtRate
+                                : 'Not Invoiced';    
                         }
 
                         return (
@@ -1506,7 +1577,7 @@ function ServiceOpenSchedule() {
                               <>
                                 <td>{machineTime}</td>
                                 <td>{hourRate}</td>
-                                <td>{targetHourRate}</td>
+                                <td>{tgtRate}</td>
                               </>
                             )}
                           </tr>

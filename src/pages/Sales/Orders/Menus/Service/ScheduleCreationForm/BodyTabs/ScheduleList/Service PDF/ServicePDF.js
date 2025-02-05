@@ -210,7 +210,10 @@ const styles = StyleSheet.create({
   POnodata: {
     width: "70%",
     paddingBottom: "3px",
-  },
+    flexWrap: "wrap",         // Ensures text wraps within the width
+    whiteSpace: "pre-wrap",   // Maintains spacing and line breaks
+    wordBreak: "break-word", 
+  },  
 
   SalesContact: {
     width: "30%",
@@ -426,19 +429,19 @@ const styles = StyleSheet.create({
   },
   tableDisplay: {
     width: "100%",
-    marginTop: "10px",
+    // marginTop: "5px",
     borderBottom: 1,
   },
   srl: {
     width: "10%",
     paddingBottom: "3px",
-    paddingTop: "3px",
+    paddingTop: "1px",
     textAlign: "center",
   },
   drawingname: {
     width: "25%",
     paddingBottom: "3px",
-    paddingTop: "3px",
+    paddingTop: "1px",
     textAlign: "center",
   },
   taksno: {
@@ -457,38 +460,38 @@ const styles = StyleSheet.create({
     width: "10%",
     paddingBottom: "3px",
     textAlign: "center",
-    paddingTop: "3px",
+    paddingTop: "1px",
   },
   Packing: {
     width: "10%",
     paddingBottom: "3px",
     textAlign: "center",
-    paddingTop: "3px",
+    paddingTop: "1px",
   },
   Scheduled: {
     width: "10%",
     paddingBottom: "3px",
     textAlign: "center",
-    paddingTop: "3px",
+    paddingTop: "1px",
   },
   Produced: {
     width: "10%",
     paddingBottom: "3px",
     textAlign: "center",
-    paddingTop: "3px",
+    paddingTop: "1px",
   },
   Delivered: {
     width: "20%",
     paddingBottom: "3px",
     textAlign: "center",
-    paddingTop: "3px",
+    paddingTop: "1px",
   },
 
   scheduleNotable: {
     width: "15%",
     paddingBottom: "3px",
     textAlign: "center",
-    paddingTop: "3px",
+    paddingTop: "1px",
   },
   tableDataView: {
     width: "100%",
@@ -658,9 +661,36 @@ const styles = StyleSheet.create({
   pospan: {
     marginLeft: "3px",
   },
+
+  // *********************
+  title1: {
+    width: "100%",
+    marginTop: "10px",
+    fontSize: "12px",
+    fontWeight: "bolder",
+    textDecoration: "underline",
+    fontFamily: "Helvetica-Bold",
+    textAlign: "center", // Center align text
+  },
+
+  title2: {
+    width: "100%",
+    fontSize: "11px",
+    fontWeight: "bold",
+    fontFamily: "Helvetica-Bold",
+    textAlign: "center", // Center align text
+  },
+
+  companyInfo: {
+    marginTop: "4px",
+    width: "100%", // Use full width for better centering
+    fontSize: "9px",
+    textAlign: "center", // Center align text
+    marginBottom: "5px"
+  },
 });
 
-const ServicePDF = ({ formdata }) => {
+const ServicePDF = ({ formdata, PDFData }) => {
   const [Tabledata, setTabledata] = useState([]);
   const [index, setIndex] = useState(0);
 
@@ -706,7 +736,6 @@ const ServicePDF = ({ formdata }) => {
   // },[])
 
   // console.log('formdata.Cust_name', formdata[0].Cust_name);
-  
 
   return (
     <Document>
@@ -734,7 +763,41 @@ const ServicePDF = ({ formdata }) => {
                       </View>
                     </View>
 
-                    <View style={styles.MagodTitle}>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        marginLeft:'-50px'
+                      }}
+                    >
+                      <Text
+                        style={[styles.title1, { textDecoration: "underline" }]}
+                      >
+                        Production Schedule Form
+                      </Text>
+
+                      <Text style={styles.title2}>
+                        {PDFData.RegisteredName}
+                      </Text>
+
+                      <Text style={styles.companyInfo}>
+                        GSTIN: {PDFData.GST_No}, CIN: {PDFData.CIN_No}
+                      </Text>
+
+                      <Text style={styles.companyInfo}>
+                        {PDFData.RegistredOfficeAddress}
+                      </Text>
+
+                      <Text style={styles.companyInfo}>
+                        {PDFData.PhonePrimary} {PDFData.PhoneSecondary}{" "}
+                        {PDFData.Email} {PDFData.URL}
+                      </Text>
+                    </View>
+
+                    {/* ------------------------------------------------------------- */}
+
+                    {/* <View style={styles.MagodTitle}>
                       <View>
                         <Text
                           style={[styles.titleBold, { marginLeft: "20px" }]}
@@ -774,14 +837,16 @@ const ServicePDF = ({ formdata }) => {
                           {item.typeofform}
                         </Text>
                       </View>
-                    </View>
+                    </View> */}
+
+                    {/* ----------------------------------------------------------------------- */}
 
                     <View style={styles.tableContainer2}>
                       <View>
                         <View
                           style={[
                             styles.pageNumberContainer,
-                            { textAlign: "right" },
+                            { marginRight:'10px' },
                           ]}
                         >
                           <Text
@@ -950,7 +1015,7 @@ const ServicePDF = ({ formdata }) => {
               <View
                 style={[
                   styles.tableDisplay,
-                  { marginTop: "3px", marginBottom: "10px" },
+                  { marginBottom: "10px" },
                 ]}
               >
                 <View style={styles.column}>
@@ -1209,7 +1274,7 @@ const ServicePDF = ({ formdata }) => {
                                 {
                                   marginBottom: "5px",
                                   borderBottom: 1,
-                                  textAlign: "center",
+                                  textAlign: "left",
                                 },
                               ]}
                             >
@@ -1224,7 +1289,7 @@ const ServicePDF = ({ formdata }) => {
                                 {
                                   marginBottom: "5px",
                                   borderBottom: 1,
-                                  textAlign: "center",
+                                  textAlign: "left",
                                 },
                               ]}
                             >
@@ -1239,7 +1304,7 @@ const ServicePDF = ({ formdata }) => {
                                 {
                                   marginBottom: "5px",
                                   borderBottom: 1,
-                                  textAlign: "center",
+                                  textAlign: "left",
                                 },
                               ]}
                             >
@@ -1254,7 +1319,7 @@ const ServicePDF = ({ formdata }) => {
                                 {
                                   marginBottom: "5px",
                                   borderBottom: 1,
-                                  textAlign: "center",
+                                  textAlign: "left",
                                 },
                               ]}
                             >
@@ -1269,7 +1334,7 @@ const ServicePDF = ({ formdata }) => {
                                 {
                                   marginBottom: "5px",
                                   borderBottom: 1,
-                                  textAlign: "center",
+                                  textAlign: "left",
                                 },
                               ]}
                             >
@@ -1280,7 +1345,7 @@ const ServicePDF = ({ formdata }) => {
                             <Text
                               style={[
                                 styles.globalfontwithbold,
-                                { marginBottom: "5px", textAlign: "center" },
+                                { marginBottom: "5px", textAlign: "left" },
                               ]}
                             >
                               MPHR
