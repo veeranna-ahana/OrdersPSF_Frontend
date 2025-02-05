@@ -19,6 +19,7 @@ export default function FormHeader(props) {
     openModal,
     closeModal,
     updateOrdrData,
+    saveJWMRChanges,
   } = props;
   const [folders, setFolders] = useState([]);
 
@@ -140,6 +141,15 @@ export default function FormHeader(props) {
           >
             Save
           </button>
+          {/* <button
+            className="button-style"
+            onClick={() => {
+              saveJWMRChanges();
+            }}
+            // onClick={props.openModal}
+          >
+            Save1
+          </button> */}
           <button className="button-style" onClick={handleClick}>
             Open folder
           </button>

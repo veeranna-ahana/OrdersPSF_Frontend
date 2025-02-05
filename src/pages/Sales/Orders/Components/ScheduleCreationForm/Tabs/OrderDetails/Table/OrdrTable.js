@@ -35,13 +35,17 @@ function OrdrTable(props) {
     setSelectedRows,
     setSelectedRowItems,
     selectedRowItems,
+    sortConfig,
+    setSortConfig,
+    sortedData,
+    LastSlctedRow,
   } = props;
 
   useEffect(() => {
     setDetailsColour();
   }, [OrdrDetailsData]);
 
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
+  // const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
   const getRowBackgroundColor = (order) => {
     if (order.Qty_Ordered === 0) return "lavender";
@@ -68,39 +72,39 @@ function OrdrTable(props) {
     setSortConfig({ key, direction });
   };
 
-  const sortedData = () => {
-    const dataCopy = [...filteredData];
+  // const sortedData = () => {
+  //   const dataCopy = [...filteredData];
 
-    if (sortConfig.key) {
-      dataCopy.sort((a, b) => {
-        let valueA = a[sortConfig.key];
-        let valueB = b[sortConfig.key];
+  //   if (sortConfig.key) {
+  //     dataCopy.sort((a, b) => {
+  //       let valueA = a[sortConfig.key];
+  //       let valueB = b[sortConfig.key];
 
-        // Convert only for the "intiger" columns
-        if (
-          sortConfig.key === "LOC" ||
-          sortConfig.key === "Holes" ||
-          sortConfig.key === "JWCost" ||
-          sortConfig.key === "MtrlCost" ||
-          sortConfig.key === "UnitPrice" ||
-          sortConfig.key === "Qty_Ordered" ||
-          sortConfig.key === "Total"
-        ) {
-          valueA = parseFloat(valueA);
-          valueB = parseFloat(valueB);
-        }
+  //       // Convert only for the "intiger" columns
+  //       if (
+  //         sortConfig.key === "LOC" ||
+  //         sortConfig.key === "Holes" ||
+  //         sortConfig.key === "JWCost" ||
+  //         sortConfig.key === "MtrlCost" ||
+  //         sortConfig.key === "UnitPrice" ||
+  //         sortConfig.key === "Qty_Ordered" ||
+  //         sortConfig.key === "Total"
+  //       ) {
+  //         valueA = parseFloat(valueA);
+  //         valueB = parseFloat(valueB);
+  //       }
 
-        if (valueA < valueB) {
-          return sortConfig.direction === "asc" ? -1 : 1;
-        }
-        if (valueA > valueB) {
-          return sortConfig.direction === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-    return dataCopy;
-  };
+  //       if (valueA < valueB) {
+  //         return sortConfig.direction === "asc" ? -1 : 1;
+  //       }
+  //       if (valueA > valueB) {
+  //         return sortConfig.direction === "asc" ? 1 : -1;
+  //       }
+  //       return 0;
+  //     });
+  //   }
+  //   return dataCopy;
+  // };
 
   return (
     <div style={{ overflow: "auto", height: "350px" }}>
@@ -231,6 +235,19 @@ function OrdrTable(props) {
                   />
                 </td>
                 {/* <td>
+                  <input
+                    className="table-cell-editor"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                    }}
+                    value={LastSlctedRow?.JWCost || ""}
+                    onChange={(e) => {
+                      handleJWMR(i, "JWCost", e.target.value); // Pass field and value
+                    }}
+                  />
+                </td> */}
+                {/* <td>
 									<input value={OrdrDetailsItem.MtrlCost} />
 								</td> */}
                 <td>
@@ -273,6 +290,23 @@ function OrdrTable(props) {
                     }}
                   />
                 </td>
+                {/* <td>
+                  {" "}
+                  <input
+                    className="table-cell-editor"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                    }}
+                    value={LastSlctedRow?.Qty_Ordered}
+                    // onChange={(e) =>
+                    //   handleJWMR(i, "Qty_Ordered", e.target.value)
+                    // }
+                    onChange={(e) => {
+                      handleJWMR(i, "Qty_Ordered", e.target.value, true); // Pass `true` for JRM
+                    }}
+                  />
+                </td> */}
                 <td>
                   {parseFloat(
                     OrdrDetailsItem.UnitPrice * OrdrDetailsItem.Qty_Ordered

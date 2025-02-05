@@ -335,6 +335,23 @@ function NewOrder(props) {
   const POInputChange = (e) => {
     e.preventDefault();
     setPurchaseorder(e.target.value);
+    if (e.target.value.length > 100) {
+      // toast.error("PO No cannot be more than 100 characters!");
+      toast.error("Data too long for the column Purchase_Order at row 1!");
+    }
+  };
+  const handleSpecialInstructionsChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setFormSpecialInstructions(value);
+
+    // Check if length exceeds 100 characters
+    if (value.length > 100) {
+      // toast.error("Special Instructions cannot be more than 100 characters!");
+      toast.error(
+        "Data too long for the column Special_Instructions at row 1!!"
+      );
+    }
   };
   const handleCheckboxChange = () => {
     const newCheckedValue = !isChecked;
@@ -372,13 +389,15 @@ function NewOrder(props) {
     }
   };
 
+  const [inputValue, setInputValue] = useState(userName);
+
   return (
     <div>
       <div className="row">
         <h4 className="title">New Order Entry Form: {props.Type}</h4>
       </div>
 
-      <Form className="form" onSubmit={SaveOrder}>
+      <Form className="form" onSubmit={SaveOrder} autoComplete="off">
         <div className="d-flex col-md-12 justify-content-end mb-2">
           <button
             className={
@@ -427,7 +446,7 @@ function NewOrder(props) {
                     id="formPurchaseOrderNo"
                     className="input-field"
                     type="text"
-                    maxLength={100}
+                    maxLength={150}
                     onChange={POInputChange}
                     required
                     placeholder="Please ented PO No with DC No"
@@ -711,7 +730,11 @@ function NewOrder(props) {
                     onChange={(e) => setCustomerContact(e.target.value)}
                     value={CustomerContact}
                     required
+                    onFocus={(e) =>
+                      e.target.setAttribute("autocomplete", "off")
+                    }
                     autoComplete="off"
+                    // autoComplete="new-password"
                   />
                 </div>
               </div>
@@ -833,8 +856,9 @@ function NewOrder(props) {
                     id="formSpecialInstructions"
                     className="input-field"
                     type="text"
-                    maxLength={100}
-                    onChange={(e) => setFormSpecialInstructions(e.target.value)}
+                    maxLength={120}
+                    // onChange={(e) => setFormSpecialInstructions(e.target.value)}
+                    onChange={handleSpecialInstructionsChange}
                     value={formSpecialInstructions}
                     style={{
                       borderRadius: "0",

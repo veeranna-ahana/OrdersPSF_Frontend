@@ -655,56 +655,143 @@ export default function ScheduleCreationForm(props) {
     }
   };
 
-  const handleJWMR = async (index, field, value) => {
+  // const handleJWMR = async (index, field, value) => {
+  //   console.log("value is", value);
+  //   if (value < 0) {
+  //     toast.error("Please Enter a Positive Number", {
+  //       position: toast.POSITION.TOP_CENTER,
+  //     });
+  //   } else {
+  //     // Update LastSlctedRow fields directly, keeping it in sync with new value
+  //     const updatedRow = {
+  //       ...LastSlctedRow,
+  //       [field]: value,
+  //     };
+
+  //     console.log("ordertablevaluesupdate", updatedRow);
+
+  //     // Reflect LastSlctedRow change back into filteredData at the given index
+  //     const updatedDwgdata = [...filteredData];
+  //     updatedDwgdata[index] = updatedRow;
+
+  //     // Update filtered data and LastSlctedRow states
+  //     setFilteredData(updatedDwgdata);
+  //     setLastSlctedRow(updatedRow);
+  //     console.log("handleJWMRLastSlctedRow", LastSlctedRow);
+
+  //     // Prepare data for API call, including the updated row
+  //     const updateOrderDetailsData = {
+  //       orderNo: OrderData.Order_No,
+  //       OrderSrl: selectedSrl,
+  //       // LastSlctedRow: updatedRow, // Keeps row selection persistent
+  //       LastSlctedRow: LastSlctedRow, // Keeps row selection persistent
+  //     };
+  //     console.log("updateOrderDetailsData", updateOrderDetailsData);
+
+  //     // Call the updateOrderDetails API
+  //     const orderDetailsResponse = await postRequest(
+  //       endpoints.ordertablevaluesupdate,
+  //       updateOrderDetailsData
+  //     );
+
+  //     if (orderDetailsResponse.success) {
+  //       toast.success("Order details updated successfully", {
+  //         position: toast.POSITION.TOP_CENTER,
+  //       });
+  //       // Optionally fetch data again to verify updates
+  //       // fetchData();
+  //     } else {
+  //       // toast.warning("Order details update failed, check once", {
+  //       //   position: toast.POSITION.TOP_CENTER,
+  //       // });
+  //     }
+  //   }
+  // };
+  const [editedData, setEditedData] = useState({}); // Store changed values
+  // const handleJWMR = (index, field, value) => {
+  //   if (value < 0) {
+  //     toast.error("Please enter a positive number!", {
+  //       position: toast.POSITION.TOP_CENTER,
+  //     });
+  //     return;
+  //   }
+
+  //   // Update the row data without triggering an API call
+  //   const updatedRow = { ...LastSlctedRow, [field]: value };
+  //   setLastSlctedRow(updatedRow);
+
+  //   // Store edited values separately (without affecting the API)
+  //   setEditedData((prev) => ({
+  //     ...prev,
+  //     [field]: value,
+  //   }));
+
+  //   // Update filteredData as well
+  //   const updatedDwgdata = [...filteredData];
+  //   updatedDwgdata[index] = updatedRow;
+  //   setFilteredData(updatedDwgdata);
+  // };
+  
+  const handleJWMR = (index, field, value) => {
     console.log("value is", value);
     if (value < 0) {
       toast.error("Please Enter a Positive Number", {
         position: toast.POSITION.TOP_CENTER,
       });
+      return;
+    }
+
+    // Check LastSlctedRow exists and update accordingly
+    if (!LastSlctedRow) {
+      console.error("LastSlctedRow is undefined.");
+      return;
+    }
+
+    // Update the row in LastSlctedRow safely
+    const updatedRow = {
+      ...LastSlctedRow,
+      [field]: value,
+    };
+
+    // Save the updated row data in the state
+    setLastSlctedRow(updatedRow);
+
+    // Update the filteredData for the table view
+    const updatedDwgdata = [...filteredData];
+    updatedDwgdata[index] = updatedRow;
+    setFilteredData(updatedDwgdata);
+  };
+
+  const saveJWMRChanges = async () => {
+    if (!Object.keys(editedData).length) {
+      toast.warning("No changes to update!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
+
+    const updateOrderDetailsData = {
+      orderNo: OrderData.Order_No,
+      OrderSrl: selectedSrl,
+      LastSlctedRow: LastSlctedRow, // Sending the latest edited row
+    };
+
+    console.log("Updating order details:", updateOrderDetailsData);
+
+    const orderDetailsResponse = await postRequest(
+      endpoints.ordertablevaluesupdate,
+      updateOrderDetailsData
+    );
+
+    if (orderDetailsResponse.success) {
+      toast.success("Order details updated successfully", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      setEditedData({}); // Clear stored changes after successful update
     } else {
-      // Update LastSlctedRow fields directly, keeping it in sync with new value
-      const updatedRow = {
-        ...LastSlctedRow,
-        [field]: value,
-      };
-
-      console.log("ordertablevaluesupdate", updatedRow);
-
-      // Reflect LastSlctedRow change back into filteredData at the given index
-      const updatedDwgdata = [...filteredData];
-      updatedDwgdata[index] = updatedRow;
-
-      // Update filtered data and LastSlctedRow states
-      setFilteredData(updatedDwgdata);
-      setLastSlctedRow(updatedRow);
-      console.log("handleJWMRLastSlctedRow", LastSlctedRow);
-
-      // Prepare data for API call, including the updated row
-      const updateOrderDetailsData = {
-        orderNo: OrderData.Order_No,
-        OrderSrl: selectedSrl,
-        // LastSlctedRow: updatedRow, // Keeps row selection persistent
-        LastSlctedRow: LastSlctedRow, // Keeps row selection persistent
-      };
-      console.log("updateOrderDetailsData", updateOrderDetailsData);
-
-      // Call the updateOrderDetails API
-      const orderDetailsResponse = await postRequest(
-        endpoints.ordertablevaluesupdate,
-        updateOrderDetailsData
-      );
-
-      if (orderDetailsResponse.success) {
-        toast.success("Order details updated successfully", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-        // Optionally fetch data again to verify updates
-        // fetchData();
-      } else {
-        // toast.warning("Order details update failed, check once", {
-        //   position: toast.POSITION.TOP_CENTER,
-        // });
-      }
+      toast.error("Order update failed. Try again!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -1230,7 +1317,43 @@ export default function ScheduleCreationForm(props) {
   const [selectedRow, setSelectedRow] = useState(null); // For single row selection
   const [selectedRows, setSelectedRows] = useState([]); // For multi-row selection
   const [selectedRowItems, setSelectedRowItems] = useState([]); // For multi-row selection
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
+  const sortedData = () => {
+    const dataCopy = [...filteredData];
+
+    if (sortConfig.key) {
+      dataCopy.sort((a, b) => {
+        let valueA = a[sortConfig.key];
+        let valueB = b[sortConfig.key];
+
+        // Convert only for the "intiger" columns
+        if (
+          sortConfig.key === "LOC" ||
+          sortConfig.key === "Holes" ||
+          sortConfig.key === "JWCost" ||
+          sortConfig.key === "MtrlCost" ||
+          sortConfig.key === "UnitPrice" ||
+          sortConfig.key === "Qty_Ordered" ||
+          sortConfig.key === "Total"
+        ) {
+          valueA = parseFloat(valueA);
+          valueB = parseFloat(valueB);
+        }
+
+        if (valueA < valueB) {
+          return sortConfig.direction === "asc" ? -1 : 1;
+        }
+        if (valueA > valueB) {
+          return sortConfig.direction === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return dataCopy;
+  };
+
+  //
   // // Handle single row selection
   // const handleRowClick = async (rowData) => {
   //   setSelectedItems([]);
@@ -1430,12 +1553,81 @@ export default function ScheduleCreationForm(props) {
     // console.log("singleSelectedSrl", selectedSrl);
   };
 
+  const handleKeyDown = (event) => {
+    if (!LastSlctedRow || !LastSlctedRow.Order_Srl) return; // Don't move if no row is selected
+
+    const totalRows = sortedData();
+
+    // Find the index of the currently selected row based on Order_Srl
+    const currentRowIndex = totalRows.findIndex(
+      (row) => row.Order_Srl === LastSlctedRow.Order_Srl
+    );
+
+    let newRow;
+
+    if (event.key === "ArrowUp" && currentRowIndex > 0) {
+      newRow = totalRows[currentRowIndex - 1];
+    } else if (
+      event.key === "ArrowDown" &&
+      currentRowIndex < totalRows.length - 1
+    ) {
+      newRow = totalRows[currentRowIndex + 1];
+    }
+
+    if (newRow) {
+      setLastSlctedRow(newRow);
+      // Apply style for selected row
+      document.querySelectorAll(".row").forEach((row) => {
+        row.style.backgroundColor = "";
+      });
+      const selectedRowElement = document.querySelector(
+        `.row[data-order-srl="${newRow.Order_Srl}"]`
+      );
+      if (selectedRowElement) {
+        selectedRowElement.style.backgroundColor = "lightblue"; // or any color you want
+      }
+    }
+  };
+
+  // Add event listener for keyboard navigation
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [LastSlctedRow]);
+  // const handleKeyDown = (event) => {
+  //   if (!LastSlctedRow || !LastSlctedRow.Order_Srl) return; // Don't move if no row is selected
+
+  //   const totalRows = sortedData();
+
+  //   // Find the index of the currently selected row based on Order_Srl
+  //   const currentRowIndex = totalRows.findIndex(
+  //     (row) => row.Order_Srl === LastSlctedRow.Order_Srl
+  //   );
+
+  //   if (event.key === "ArrowUp" && currentRowIndex > 0) {
+  //     const prevRow = totalRows[currentRowIndex - 1];
+  //     setLastSlctedRow(prevRow);
+  //   } else if (
+  //     event.key === "ArrowDown" &&
+  //     currentRowIndex < totalRows.length - 1
+  //   ) {
+  //     const nextRow = totalRows[currentRowIndex + 1];
+  //     setLastSlctedRow(nextRow);
+  //   }
+  // };
+
+  // // Add event listener for keyboard navigation
+  // useEffect(() => {
+  //   window.addEventListener("keydown", handleKeyDown);
+  //   return () => window.removeEventListener("keydown", handleKeyDown);
+  // }, [LastSlctedRow]);
   // console.log("singleSelectedRow", selectedRow);
   // console.log("singleLastSlctedRow", LastSlctedRow);
   // console.log("singleSelectedItems", selectedItems);
   // console.log("singleSelectedSrl", selectedSrl);
 
   // // Handle multi row selection
+
   const handleCheckboxChange = async (rowData) => {
     setSelectedRows((prevSelectedRows) => {
       const updatedRows = prevSelectedRows.some(
@@ -1626,6 +1818,10 @@ export default function ScheduleCreationForm(props) {
   const handleSelectAll = () => {
     setSelectedRows(OrdrDetailsData);
     setSelectedItems(OrdrDetailsData);
+    // Extract Order_Srl from selected items
+    const selectedOrderSrl = OrdrDetailsData.map((item) => item.Order_Srl);
+    console.log("selectallselectedOrderSrl", selectedOrderSrl);
+    setSelectedSrl(selectedOrderSrl); // Update selectedSrl state
   };
 
   // reverse Button
@@ -1704,6 +1900,7 @@ export default function ScheduleCreationForm(props) {
           openModal={openModal}
           closeModal={closeModal}
           updateOrdrData={updateOrdrData}
+          saveJWMRChanges={saveJWMRChanges}
         />
 
         <Tabs className="nav-tabs tab_font">
@@ -1733,9 +1930,9 @@ export default function ScheduleCreationForm(props) {
               setSelectedSrl={setSelectedSrl}
               setSelectedRows={setSelectedRows}
               setSelectedItems={setSelectedItems}
-               setSelectedRowItems={setSelectedRowItems}
-  setLastSlctedRow={setLastSlctedRow}
-  setSelectedRow={setSelectedRow}
+              setSelectedRowItems={setSelectedRowItems}
+              setLastSlctedRow={setLastSlctedRow}
+              setSelectedRow={setSelectedRow}
             />
           </Tab>
           <Tab eventKey="findoldpart" title="Find Old Part">
@@ -1806,6 +2003,9 @@ export default function ScheduleCreationForm(props) {
                 setSelectedRows={setSelectedRows}
                 setSelectedRowItems={setSelectedRowItems}
                 selectedRowItems={selectedRowItems}
+                sortConfig={sortConfig}
+                setSortConfig={setSortConfig}
+                sortedData={sortedData}
               />
             </Tab>
             <Tab eventKey="scheduleList" title="Schedule List">

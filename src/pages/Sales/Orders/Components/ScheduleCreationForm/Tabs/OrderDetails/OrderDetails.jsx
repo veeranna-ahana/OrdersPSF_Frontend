@@ -73,6 +73,9 @@ export default function OrderDetails(props) {
     setSelectedRowItems,
     selectedRowItems,
     setSelectedSrl,
+    sortConfig,
+    setSortConfig,
+    sortedData,
   } = props;
 
   const [groupBoxAddSrlVisible, setGroupBoxAddSrlVisible] = useState(true);
@@ -87,6 +90,8 @@ export default function OrderDetails(props) {
 
   const [isLoading, setisLoading] = useState(false);
 
+  console.log("LastSlctedRow", LastSlctedRow);
+  
   function importExcelFunc() {
     setImportExcelModal(true);
   }
@@ -1545,6 +1550,10 @@ export default function OrderDetails(props) {
               selectedRowItems={selectedRowItems}
               Operation={Operation}
               setOperation={setOperation}
+              sortConfig={sortConfig}
+              setSortConfig={setSortConfig}
+              sortedData={sortedData}
+              LastSlctedRow={LastSlctedRow}
             />
           </div>
           <div className="col-md-6">
