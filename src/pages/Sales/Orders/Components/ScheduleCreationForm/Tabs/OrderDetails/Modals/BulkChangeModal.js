@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
-
+import LoadingPage from "../../../Loading";
 function BulkChangeModal(props) {
   const {
     bulkChnangMdl,
@@ -63,6 +63,7 @@ function BulkChangeModal(props) {
     blkChange,
     handleChange,
     handleInputChange,
+    isLoading,
   } = props;
 
   const [isChecked, setChecked] = useState(false);
@@ -73,6 +74,7 @@ function BulkChangeModal(props) {
   };
   return (
     <div className="row">
+      {/* {isLoading && <LoadingPage />} */}
       <Modal
         show={bulkChnangMdl}
         size="lg"
@@ -98,9 +100,9 @@ function BulkChangeModal(props) {
               <div className="col">
                 {/* <div className="col-md-3"></div>
                   <div className="col-md-3"></div> */}
-                <Form.Group controlId="strmtrlcode">
-                  {/* <div className="md-col-2"> */}
-                  <div className="row">
+                {/* <Form.Group controlId="strmtrlcode"> */}
+                {/* <div className="md-col-2"> */}
+                {/* <div className="row">
                     <div className="col-md-2">
                       <label className="form-label">Dwg / Part Name</label>
                     </div>
@@ -124,15 +126,15 @@ function BulkChangeModal(props) {
                         checked={blkCngCheckBox[0]}
                       />
                     </div>
-                  </div>
+                  </div> */}
 
-                  {/* </div> */}
-                </Form.Group>
+                {/* </div> */}
+                {/* </Form.Group> */}
 
                 <Form.Group controlId="strmtrlcode">
                   <div className="row">
                     <div className="col-md-2">
-                      <label className="form-label">Material</label>
+                      <label className="form-label">Material Code</label>
                     </div>
                     <div className="col-md-8">
                       {mtrldata.length > 0 || mtrldata != null ? (
@@ -178,12 +180,12 @@ function BulkChangeModal(props) {
                         name="blkCngMtrlSrc"
                         // onChange={selectMtrlSrc}
                         disabled={!blkCngCheckBox[2]}
-                        value={blkChange.MtrlSrc}
+                        value={blkChange.MtrlSrc || "Customer"}
                         onChange={handleChange}
                       >
-                        <option value="" disabled selected>
+                        {/* <option value="" disabled selected>
                           ** Select **
-                        </option>
+                        </option> */}
                         <option value={"Customer"}>Customer</option>
                         <option value={"Magod"}>Magod</option>
                       </select>
@@ -536,12 +538,12 @@ function BulkChangeModal(props) {
                           value={blkChange.InspLvl}
                           onChange={handleChange}
                         >
-                          <option value="" selected>
+                          {/* <option value="" selected>
                             ** Select **
-                          </option>
+                          </option> */}
                           {inspdata.map((insplvl) => {
                             return (
-                              <option value={insplvl["InspLevel"]}>
+                              <option value={insplvl["InspLevel"] || "Insp1"}>
                                 {insplvl["InspLevel"]}
                               </option>
                             );
@@ -574,12 +576,12 @@ function BulkChangeModal(props) {
                           value={blkChange.PkngLvl}
                           onChange={handleChange}
                         >
-                          <option value="" selected>
+                          {/* <option value="" selected>
                             ** Select **
-                          </option>
+                          </option> */}
                           {packdata.map((packlvl) => {
                             return (
-                              <option value={packlvl["PkngLevel"]}>
+                              <option value={packlvl["PkngLevel"] || "Pkng1"}>
                                 {packlvl["PkngLevel"]}
                               </option>
                             );

@@ -545,14 +545,14 @@ function ImportDwgModal(props) {
 	//20012025
 	const PostOrderDwgData = async (e) => {
     e.preventDefault();
-    console.log("PostOrderDwgData");
+    // console.log("PostOrderDwgData");
     let dwgfiles = [];
     dwgfiles = e.target.elements.impDwgFiles;
     let strInsplvl = e.target.elements.strinspLvl.value;
     let strPknglvl = e.target.elements.strpkngLvl.value;
 
-    console.log("strInsplvl", strInsplvl);
-    console.log("strPknglvl", strPknglvl);
+    // console.log("strInsplvl", strInsplvl);
+    // console.log("strPknglvl", strPknglvl);
 
     let imprtdwgobjtemp = {
       ...imprtDwgObj,
@@ -568,7 +568,7 @@ function ImportDwgModal(props) {
       dgfiles: dwgfiles,
     };
 
-    console.log("imprtdwgobjtemp", imprtdwgobjtemp);
+    // console.log("imprtdwgobjtemp", imprtdwgobjtemp);
 
     setImprtDwgObj(imprtdwgobjtemp);
     PostOrderDetails(2, imprtdwgobjtemp);

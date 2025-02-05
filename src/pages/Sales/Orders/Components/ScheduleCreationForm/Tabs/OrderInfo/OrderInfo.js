@@ -7,16 +7,10 @@ import { toast } from "react-toastify";
 import { endpoints } from "../../../../../../api/constants";
 import { postRequest } from "../../../../../../api/apiinstance";
 export default function OrderInfo(props) {
-	//console.log("propssss", props.OrderData);
-	////console.log("props.OrderData?.salesContact", props.OrderData?.SalesContact);
-	////console.log("props.OrderData?.Order_Status", props.OrderData?.Order_Status);
+	
 	const [dealingEngineer, setDealingEngineer] = useState(
 		props.OrderData?.Dealing_Engineer || ""
 	);
-
-	// const [deliveryDate, setDeliveryDate] = useState(
-	// 	props.OrderData?.Delivery_Date || ""
-	// );
 	const formatDate = (dateString) => {
 		const date = new Date(dateString);
 		const year = date.getFullYear();
@@ -37,19 +31,13 @@ export default function OrderInfo(props) {
 	const handleInputChange = (e) => {
 		setDealingEngineer(e.target.value);
 	};
-	// Get today's date in the format YYYY-MM-DD
-	const today = new Date().toISOString().split("T")[0];
-
-	// const handleDateChange = (e) => {
-	// 	console.log("date value", typeof e.target.value);
-	// 	setDeliveryDate(e.target.value);
-	// };
+	const today = new Date().toISOString().split("T")[0];	
 	const orderDateISOString = props.OrderData?.Delivery_Date;
 	const orderDate = new Date(orderDateISOString);
 
 	// Get day, month, and year
 	const day = orderDate.getDate();
-	const month = orderDate.getMonth() + 1; // Month is zero-based, so add 1
+	const month = orderDate.getMonth() + 1; 
 	const year = orderDate.getFullYear();
 
 	// Format the date as dd mm yyyy
@@ -61,56 +49,32 @@ export default function OrderInfo(props) {
 		props.OrderData?.Dealing_Engineer || ""
 	);
 
-	// Update the state when props.OrderData changes
-	console.log(
-		"props.OrderData?.Dealing_Engineer",
-		props.OrderData?.Dealing_Engineer
-	);
+	
 	useEffect(() => {
 		setSelectedEngineer(props.OrderData?.Dealing_Engineer);
 	}, [props.OrderData]);
-	console.log("selectedEngineer", selectedEngineer);
-	// Handle dropdown change
-	// const handleChange = (event) => {
-	// 	setSelectedEngineer(event.target.value);
-	// };
-
-	console.log("props.OrderData", props?.OrderData?.Order_No);
+	
 
 	const handleChange = (event) => {
 		const { id, value } = event.target;
 		// let updatedEngineer = selectedEngineer;
-
 		if (id === "formDealingEngineer") {
 			const [selectedId, selectedName] = value.split(":");
-			// console.log("Selected ID:", selectedId);
-			// console.log("Selected Name 1:", selectedName);
-
 			setSelectedEngineer(selectedName);
 			var updatedEngineer = selectedName;
 		} else if (id === "deliveryDate") {
-			console.log("value", value);
-
+			// console.log("value", value);
 			setDeliveryDate(value);
 			var updatedDeliveryDate = value;
 		} else if (id === "OrderValue") {
-			console.log("value", value);
-
+			// console.log("value", value);
 			setOrderValue(value);
 		}
-		// console.log("Selected Name 2", selectedEngineer);
-		console.log("updatedEngineer", updatedEngineer);
-		console.log("updatedDeliveryDate", updatedDeliveryDate);
+		
 		// Prepare the data for the second update (updateOrderDetails)
 		const updateOrderDetailsData = {
 			orderNo: props.OrderData.Order_No,
-			// deliveryDate: deliveryDate,
-			// delEngr: selectedEngineer,
-
-			// deliveryDate: updatedDeliveryDate,
-			// delEngr: updatedEngineer,
-
-			deliveryDate: updatedDeliveryDate ? updatedDeliveryDate : deliveryDate, // Ternary operator for deliveryDate
+			deliveryDate: updatedDeliveryDate ? updatedDeliveryDate : deliveryDate,
 			delEngr: updatedEngineer ? updatedEngineer : selectedEngineer,
 		};
 

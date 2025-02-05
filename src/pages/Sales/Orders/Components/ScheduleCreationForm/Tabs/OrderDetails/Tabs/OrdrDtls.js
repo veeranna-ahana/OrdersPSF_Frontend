@@ -70,52 +70,13 @@ function OrdrDtls(props) {
     handleMtrlCodeTypeaheadChangeeee,
     magodCode,
     NewSrlFormData,
+    Operation,
+    setOperation,
   } = props;
 
   const [materialCode, setMaterialCode] = useState(
     selectedItems[0]?.Mtrl_Code || ""
   );
-
-  console.log("options...", options);
-  console.log("NewSrlFormData...", NewSrlFormData);
-  // console.log("selectepartID...", selectedPartId.length);
-  // console.log("selectedItems...", selectedItems);
-  // console.log("mtrldata...", mtrldata);
-  console.log("LastSlctedRow...", LastSlctedRow?.Mtrl_Source);
-  // const handleInputChange = (input) => {
-  //   setLastSlctedRow({ Mtrl_Code: input });
-  // };
-  // const handleInputChange = (input) => {
-  //   setLastSlctedRow((prevSelectedItem) => ({
-  //     ...prevSelectedItem,
-  //     Mtrl_Code: input,
-  //   }));
-  // };
-  console.log("lastslctedrowmtrlcode", LastSlctedRow?.Mtrl_Code);
-  // if (selectedPartId.length === 0) {
-  //   // console.log("nulll...");
-  // } else {
-  //   // console.log("value", selectedPartId);
-  // }
-
-  // selectedPartId.length > 0
-  //   ? console.log(selectedPartId.length)
-  //   : console.log("null");
-  // console.log("OrdrDetailsData...", OrdrDetailsData);
-  // console.log("selectedItems...", selectedItems[i].QtyScheduled);
-
-  //   //console.log("mtrldata", mtrldata);
-  // const [importdwgshow, setImportDwgShow] = useState(false);
-
-  // const handleImportDwg = () => {
-  //   //console.log("modal opend ");
-  //   setImportDwgShow(true);
-  // };
-  // const handleCloseImportDwg = () => {
-  //   setImportDwgShow(false);
-  // };
-  // const [SelectedPartId, setSelectedPartId] = useState();
-  // const [BomArry, setBomArry] = useState([]);
   const handleMaterialCodeChange = (event) => {
     // Update the state when the dropdown value changes
     setMaterialCode(event.target.value);
@@ -127,7 +88,7 @@ function OrdrDtls(props) {
   useEffect(() => {
     // Set the default value from the array
     if (LastSlctedRow && LastSlctedRow.length > 0) {
-      setQuantity(LastSlctedRow?.Qty_Ordered); // You can adjust this based on your array structure
+      setQuantity(LastSlctedRow?.Qty_Ordered);
     }
   }, [LastSlctedRow]);
 
@@ -135,10 +96,6 @@ function OrdrDtls(props) {
     setQuantity(event.target.value);
     // Your other logic if needed
   };
-
-  // console.log("setQuantity", quantity);
-  console.log("ordrDetailsChange----", ordrDetailsChange);
-  console.log("ordrDetailsChange.DwgName", ordrDetailsChange.DwgName);
 
   return (
     <div>
@@ -185,6 +142,8 @@ function OrdrDtls(props) {
         handleInputChange={handleInputChange}
         handleMtrlCodeTypeaheadChangeeee={handleMtrlCodeTypeaheadChangeeee}
         NewSrlFormData={NewSrlFormData}
+        Operation={Operation}
+        setOperation={setOperation}
       />
       {isLoading && <LoadingPage />}
 
@@ -868,7 +827,7 @@ function OrdrDtls(props) {
                 <input
                   className="in-field mt-1"
                   type="text"
-                  // value={BomArry[0]?.Material}
+                  //   value={BomArry[0]?.Material}
                   value={
                     selectedPartId.length === 0 ? "" : BomArry[0]?.Material
                   }
